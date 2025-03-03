@@ -31,6 +31,7 @@ def naive_multiplication(x: int, y: int) -> int:
         result += temp * (10 ** (m - 1 - i))
     return result
 
+
 def karatsuba(x, y):
     """
     Implements the Karatsuba algorithm for integer multiplication.
@@ -46,7 +47,7 @@ def karatsuba(x, y):
     x = str(x)  # Convert to strings for easier digit manipulation
     y = str(y)
 
-    if len(x) < len(y): # Make sure x is the longer number
+    if len(x) < len(y):  # Make sure x is the longer number
         x, y = y, x
 
     n = len(x)
@@ -67,12 +68,10 @@ def karatsuba(x, y):
     bd = karatsuba(b, d)
     ad_plus_bc = karatsuba(a + b, c + d) - ac - bd  # Crucial step
 
-    return ac * (10**(2* (n-n_half))) + ad_plus_bc * (10**(n-n_half)) + bd
+    return ac * (10 ** (2 * (n - n_half))) + ad_plus_bc * (10 ** (n - n_half)) + bd
 
 
-
-
-def bechmark(func: Callable, x: int = 114514114514, y: int = 114514114514, n: int = 100000) -> float:
+def bechmark(func: Callable, x: int = 1145141145140000000000000000000000000000000000000000000000000000000000000000000000, y: int = 1145141145140000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, n: int = 10000) -> float:
     """
     Benchmark the function func with the given inputs x and y
     :param func: The function to benchmark
@@ -86,5 +85,6 @@ def bechmark(func: Callable, x: int = 114514114514, y: int = 114514114514, n: in
     time = timeit.timeit(lambda: func(x, y), number=n)
     return time
 
-    
-bechmark(naive_multiplication)
+
+print(bechmark(naive_multiplication))
+print(bechmark(karatsuba))
