@@ -292,7 +292,7 @@ One of the most intuitive methods to analyze the time complexity of basic recurs
 
 In the context of Karatsuba's algorithm, we can represent the recursive calls as a tree, where each level of the tree corresponds to a recursive call, and the branching factor is the number of subproblems created at each level. In this case, we have a single root $T(n)$ and three children $T(n/2)$ at each level, so on and so forth. So this is actually a ternary tree.
 #scale(75%)[
-#figure(caption: "Recursion Tree of Karatsuba Algorithm up to 3 Levels",
+#figure(caption: "Recursion Tree of Karatsuba Algorithm up to 4 Levels",
   cetz.canvas({
   import cetz.draw: *
   import cetz.tree: *
@@ -522,7 +522,8 @@ Another method to establish the time complexity of the Karatsuba algorithm is ma
   - Try $T(n) <= 6c n^(log_2 3) - 2c n$.  
   - Base case: $T(1) = d <= 6c dot 1 - 2c = 4c$, true if $c >= d/4$.  
   - Inductive step:  
-    $ T(n) <= 3 [6c (n/2)^(log_2 3) - 2c (n/2)] + c n = 3 [6c n^(log_2 3) dot 2^(-log_2 3) - c n] + c n = 6c n^(log_2 3) - 3c n + c n = 6c n^(log_2 3) - 2c n, $  
+    $ T(n) & <= 3 [6c (n/2)^(log_2 3) - 2c (n/2)] + c n = 3 [6c n^(log_2 3) dot 2^(-log_2 3) - c n] + c n \
+    &= 6c n^(log_2 3) - 3c n + c n = 6c n^(log_2 3) - 2c n, $  
     which matches exactly.
 
   Thus, $T(n) <= 6c n^(log_2 3) - 2c n <= 6c n^(log_2 3)$, and by the definition of Big O, $T(n) = O(n^(log_2 3))$.
@@ -779,7 +780,7 @@ we can generalise to $f(n) = c n^d$, where $c, d in RR^+ $ and are constants, Th
   $
     f(n) = a^k f(n/b^k) + c  sum_(i=0)^(k-1) n^d (a/b^d)^i.
   $
-  Note that $b^d$ is also a constant as $b, d in RR^+$, so we can split it from the summation and get a sum of geometric series, and we have:
+  Note that $n^d$ is also a constant as $n, d in RR^+$, so we can split it from the summation and get a sum of geometric series, and we have:
   $
     f(n) = a^k f(n/b^k) + c n^d sum_(i=0)^(k-1) (a/b^d)^i.
   $
