@@ -19,11 +19,40 @@
   ($+-$, $plus.minus$),
   ($|-$, math.tack),
   ($<--$, math.arrow.l.double.long),
-  ($-->$, math.arrow.r.double.long)
+  ($-->$, math.arrow.r.double.long),
+  ($<-->$, math.arrow.l.r.double.long)
 )
+
+#set math.equation(
+  numbering: "(1)", 
+  supplement: [Eq.],
+  block: true
+  )
 
 #let theorem-style = builder-thmbox(color: colors.at(6), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
 #let exercise = theorem-style("exercise", "Exercise")
+
+#let lemma-style = builder-thmbox(color: colors.at(4), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
+#let lemma = lemma-style("lemma", "Lemma")
+
+#let remark-style = builder-thmbox(color: colors.at(15), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
+#let remark = remark-style("remark", "Remark")
+
+#let proposition-style = builder-thmbox(color: colors.at(8), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
+#let proposition = proposition-style("proposition", "Proposition")
+
+#let definition-style = builder-thmbox(color: colors.at(10), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
+#let definition = definition-style("definition", "Definition")
+
+#let example-style = builder-thmbox(color: colors.at(16), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
+#let example = example-style("example", "Example")
+
+#let problem-style = builder-thmbox(color: colors.at(2), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
+#let problem = problem-style("problem", "Problem")
+
+#let exercise-style = builder-thmbox(color: colors.at(0), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
+#let exercise = exercise-style("exercise", "Exercise")
+
 
 #outline()
 #pagebreak()
@@ -151,7 +180,10 @@ In this article, we do not discuss the details of the algorithm, but only derive
 
 
 
-== Complexity Notations Recap
+== Some Prereqiosites
+Below are some important facts & definitions to be used for our proof and discussion.
+
+=== Complexity Notation
 Before we dive into complexity analysis of recursive algorithms, let's recap the complexity notations we will use in this article. Note that we will only use Big O (particularly) and Big Omega notations, as they are the most commonly used notations in complexity analysis.
 #definition("Big O Notation")[
   Big O notation is used to describe the upper bound of the growth rate of a complexity function. Formally, $f(n) = O(g(n))$ if there exist positive constants $c$ and $n_0$ such that $ forall n >= n_0, 0 <= f(n) <= c dot g(n). $
@@ -161,7 +193,43 @@ Before we dive into complexity analysis of recursive algorithms, let's recap the
   Big Omega notation is used to describe the lower bound of the growth rate of a complexity function. Formally, $f(n) = Omega(g(n))$ if there exist positive constants $c$ and $n_0$ such that $ forall n >= n_0, 0 <= c dot g(n) <= f(n). $
 ]
 
-Average case complexity is not discussed in this article, as it is not commonly used in complexity analysis of recursive algorithms.
+Average case complexity is not discussed in this article, as it is not commonly used in complexity analysis of recursive algorithms. But generally, we say that 
+$ T(f(n)) = Theta(g(n)) <--> [T(f(n)) = O(g(n))] and [T(f(n)) = Omega(g(n))]. $
+
+Average compexity can be defined in different ways when the context varies, while in this occasion, this is not our main focus.
+
+=== Other Lemmas
+We will also use some other lemmas to prove the time complexity of the Karatsuba algorithm. These lemmas are quite simple, and they are usually used in the analysis of recursive algorithms.
+
+#lemma("Geometric Series Sum")[
+  The sum of a geometric series is given by:
+  $
+  sum_(i=0)^k a^i = (a^(k+1) - 1)/(a - 1).
+  $
+]<geosum>
+This is a trivial fact, and could be easily obtained by induction. You may refer to other sources if you are confused.
+
+The other lemma is about logarithm, and is a quite useful formula in the analysis of divide-and-conquer algorithms.
+
+#lemma[
+  For any positive real numbers $a, b, n$, we have:
+  $
+    n^(log_a b) = b^(log_a n).
+  $
+]<changebase>
+#proof[
+  By logarithm property, we have $n = a^(log_a n)$ and $b = a^(log_a b)$.
+  
+  Substitute $n = a^(log_a n)$ to the LHS, we have:
+  $
+  "LHS" = n^(log_a b) = (a^(log_a n))^(log_a b) = a^(log_a n dot log_a b).
+  $
+  Substitute $b = a^(log_a b)$ to the RHS, we have:
+  $
+  "RHS" = b^(log_a n) = (a^(log_a b))^(log_a n) = a^(log_a b dot log_a n).
+  $
+  Thus $"LHS" = "RHS"$, which completes the proof.
+]
 
 = Common Methods for Analysing Recursive Algorithms
 Now we will try to solve the last problems we mentioned in @problems.
@@ -272,7 +340,7 @@ Above is the recursion tree of the Karatsuba multiplication algorithm up to 3 le
   *Thus, we conclude that we only need to consider the sum of non-recursive costs in all levels to get $T(n)$*
 
   So we can sum up all costs by traversing all levels of the recursion tree, and we have:
-  $ T(n) = sum_(k=0)^((log_2 n)) 3^k (c n/2^k)
+  $ T(n) = sum_(k=0)^(log_2 n) 3^k (c n/2^k)
    = c n sum_(k=0)^(log_2 n) (3/2)^k
   $
 
@@ -386,7 +454,7 @@ which is quite similar to what we have derived in the recursion tree method.
 Note that, the base case is $T(1) = O(1)$, which implies that $n/2^k = 1$, so $k = log_2 n$, and we can substitute this to the expression above
   #mitex(
     `
-    $$ T(n) = 3^{\log_2(n)} \cdot T(1) + cn \cdot [1 + (3/2) + (3/2)^2 + ... + (3/2)^{\log_2(n)-1}]. $$
+    $$ T(n) = 3^{log_2(n)} \cdot T(1) + cn \cdot [1 + (3/2) + (3/2)^2 + ... + (3/2)^{log_2(n)-1}]. $$
     `
   )
   The constant part of the expression does not depend on $n$, so when $n -> infinity$, the time complexity is dominated by the term $3^(log_2 n) = n^(log_2 3)$, which is the approximately $n^(1.585)$.
@@ -396,8 +464,8 @@ Note that, the base case is $T(1) = O(1)$, which implies that $n/2^k = 1$, so $k
 ]
 
 === Exercises
-Below are some recommended exercises to practice the telescoping method. 
-#pagebreak()
+Below are some recommended exercises to practice the telescoping method. But you may also try to solve the problems using recursion tree method, or whatever else, and compare the results. 
+
 #exercise[
   Use the telescoping method to analyze the time complexity of the following recursive algorithm:
   #figure(
@@ -463,7 +531,7 @@ Another method to establish the time complexity of the Karatsuba algorithm is ma
 ]
 
 Again, induction is quite handy for proving the time complexity of recursive algorithms. But only when it is possible to make conjecture on the time complexity of the algorithm, and the conjecture is correct, or in the context of exam, you are given the conjecture, and you need to prove it. It is not a good method to derive the time complexity of the algorithm from scratch, because it requires some intuition and educated guess.
-#pagebreak()
+
 === Exercises
 #exercise[
   Discuss the worst time complexity of the following recursive algorithm, and prove it using the induction method:
@@ -513,6 +581,7 @@ Now we show how to prove the worst case time complexity of the Karatsuba algorit
   Choose $c$ large enough in the hypothesis (e.g., $c >= c_1$) to absorb lower-order terms across all $n$. To be precise, let’s hypothesize a form that matches
 ]
 
+#linebreak()
 #remark[
   The technique we play here is a bit abstruce, but we are basically playing with inequality properties. By proper assumption and manipulation, we construct a structure that fits into the definition of Big O notation, and then we prove that the structure is correct by the definition of Big O notation.
 ]
@@ -542,7 +611,7 @@ Below are some recommended exercises to practice the substitution method.
 = Master Theorem: the Silver Bullet
 If you have made it this far, after understanding the above-mentioned methods, you are now ready to learn the Master Theorem! The Master Theorem is a powerful tool for solving recurrence relations of a specific form, and it allows us to get the time complexity of an algorithm in a simple and straightforward way, without the need for complex derivations or proofs or calculations like what we have done in the previous sections. However, the most important part is not how the theorem is like and how we can use it, but why it works. We will first discuss the intuition behind the Master Theorem from a basic case, and then generalise it to the Master Theorem.
 
-To make the following contents more readable, we introduce _devide and counquer recurrence relation_. Some of the contents in this part are from Discrete Math and Its Applications by Kenneth H. Rosen @rosenDiscreteMathematicsIts2018. We introduce one terminology from the book here, and we will use it in the following sections.
+To make the following contents more readable, we introduce _divide and conquer recurrence relation_. Some of the contents in this part are from Discrete Math and Its Applications by Kenneth H. Rosen @rosenDiscreteMathematicsIts2018. We introduce one terminology from the book here, and we will use it in the following sections.
 
 #definition("Divide and Conquer Recurrence Relation")[
   A *divide and conquer recurrence relation* is a recurrence relation of the form:
@@ -613,6 +682,7 @@ The core of *Master Theorem* is discuss the contribution of recursive cost and n
   $
   Hence, $T(f(n)) = O(log n)$ when $a=1$.
 
+#linebreak()
   #remark[
     *(Optional)* Just remark for discussing the case when $n$ is not a power of $b$. In this case, we must have $b^k < n < b^(k+1)$, where $k$ is a positive integer. We have assumed that $f(n)$ is a increasing function, so we have
     $
@@ -625,9 +695,7 @@ The core of *Master Theorem* is discuss the contribution of recursive cost and n
     Hence, $T(f(n)) = O(log n)$ when $a=1$.
   ]
   *when a > 1*: we still assume that $n = b^k$, where $k in NN^+$, and $k$ is the number of levels of the recursion tree. Recall that 
-  $
-  f(n) = a^k f(1) + c sum_(i=0)^(k-1) a^i,
-  $ and we have $sum_(i=0)^(k-1) a^i = (a^k - 1)/(a - 1)$ because it's a geometric series of common ratio $a$. Therefore, we have
+  $f(n) = a^k f(1) + c sum_(i=0)^(k-1) a^i,$ and we have $sum_(i=0)^(k-1) a^i = (a^k - 1)/(a - 1)$ because it's a geometric series of common ratio $a$. Therefore, we have
   $
     f(n) &= a^k f(1) + c (a^k - 1)/(a - 1)\
     &= a^k f(1)  + (c a^k)/(a-1) - c/(a-1)\
@@ -642,8 +710,6 @@ The core of *Master Theorem* is discuss the contribution of recursive cost and n
     forall n in NN^+, exists C_0 in RR^+, C_0 > C_1, "such that" f(n) <= C_0 n^(log_b a),
   $
   and hence, $T(f(n)) = O(n^(log_b a))$ when $a>1$.
-
-#pagebreak()
 
   #remark[
     *(Optional)* Again we just want to show the treatment of the case when $n$ is not a power of $b$, for those who are interested. In this case, we must have $b^k < n < b^(k+1)$, where $k$ is a positive integer. By our assumption that $f(n)$ is an increasing function, we have
@@ -677,10 +743,185 @@ $
   T(n) = a T(n/b) + f(n),
 $
 we can generalise to $f(n) = c n^d$, where $c, d in RR^+ $ and are constants, Thus, the previous case is a special case of this general case, where $d = 0$, so that we have a constant function of $f(n)=c$.
+#theorem[
+  *Master Theorem*:
+  Let an increasing function $f(n)$ be given, and let $a$ and $b$ be positive integers, and they satisfy
+  $ f(n) = a f(n/b) + c n^d $
+  $n$ is divisible by $b$, and $a,b in NN^+$, and $c, d in RR^+$, and $c, d$ are constants. Then
+  $
+    f(n) = 
+    cases(
+    O(n^d log n) &"if" a = b^d,
+    O(n^d) &"if" a < b^d,
+    O(n^(log_b a)) &"if" a > b^d,
+    ).
+  $ 
+]
+
+#proof[
+  First recall the treatment of $T(n)$ in the previous sections, where we applied recursion tree method. We can apply the same treatment to the general case of the recursive complexity applicable in the Master Theorem. 
+  
+  We can derive the exact form of the recurrence by telescoping the recursive relation:
+  $
+    f(n) = a f(n/b) + c n^d.
+  $<before>
+  When $n := n/b$, 
+  $
+    f(n/b) = a f(n/b^2) + c (n/b)^d. 
+  $<after>
+
+  Substitute @after to @before, we have:
+  $
+    f(n) = a[a f(n/b^2) + c (n/b)^d] + c n^d
+        = a^2 f(n/b^2) + c n^d/b^d + c n^d.
+  $
+  Continue this pattern until we are at the $k$ th level of the recursion tree, we have $k = log_b n$ so $n/b^k = 1$ (actually, but I prefer to keep this form anyway), and the base case is reached, we have:
+  $
+    f(n) = a^k f(n/b^k) + c  sum_(i=0)^(k-1) n^d (a/b^d)^i.
+  $
+  Note that $b^d$ is also a constant as $b, d in RR^+$, so we can split it from the summation and get a sum of geometric series, and we have:
+  $
+    f(n) = a^k f(n/b^k) + c n^d sum_(i=0)^(k-1) (a/b^d)^i.
+  $
+  The geometric series is quite noticeable here, as it is a ratio of $a$ and $b^d$, which are exactly the variables we discussed by cases in the theorem.
+  
+  We first discuss the special case when *$a = b^d$*.
+  In this case, the geometric series is a constant, and we have:
+  $
+    f(n) = b^(d k) f(1) + c n^d sum_(i=0)^(k-1) 1 = b^(d k) f(1) + c n^d k.
+  $
+  Since $k = log_b n$, we have $b^(d k)= b^(log_b n^d) = n^d$, hence
+  $
+    f(n) = n^d f(1) + n^d c log_b n = n^d (f(1) + c log_b n).
+  $
+  Since $f(1)$, the cost of base case, is a constant,
+  $
+    forall n in NN^+, exists c_0 in RR^+, c_0 > c n^d, "such that" f(n) <= c_0 n^d log n.
+  $ 
+
+  Hence conclude that $f(n) = O(n^d log n)$ when $a = b^d$.
+
+  In the rest of the cases, the geometric series still plays an important rule in the inference, as it either converge to a constant or diverge to infinity, depending on the ratio of $a$ and $b^d$. 
+
+  Next, we will discuss the case when *$a < b^d$*.
+  In this case, the geometric series converges to a constant,
+  #remark[
+    For those who have diffuculty in understanding the convergence of the sum of the series, here is a unrigorous explaination. When $a < b^d$, as $i$ goes to larger, $a/b^d$ goes smaller, and therefore, when we sum up the series, it tends to converge to a constant. This is a property of geometric series, and it is a well-known fact in mathematics.
+  ]
+  so we can actually combine the summation $sum_(i=0)^(k-1)(a/b^d)^i$ directly to the constant $c$, and we have:
+  $
+    f(n) = a^k f(1) + c n^d.
+  $ 
+  Again, we substitute $k = log_b n$:
+  $
+    f(n) = a^(log_b n) f(1) + c n^d = n^(log_b a) f(1) + c n^d.
+  $
+  Since $n$ is the only variable in the expression, let constants $C_1 = f(1)$, $C_2 = log_b a$,
+  $
+    f(n) = C_1 n^(C_2) + c n^d = n^d (C_1 n^(C_2-d) + c).
+  $
+  Hence,
+  $
+    forall n in NN^+, exists C_0 in RR^+, C_0 > C_1 n^(C_2-d) + c, "such that" f(n) <= C_0 n^d. 
+  $
+  Therefore, $f(n) = O(n^d)$ when $a < b^d$.
+
+  Finally, we discuss the case when *$a > b^d$*.
+  In this case, the geometric series diverges to infinity, because $a/b^d > 1$, and we have:
+  $
+    f(n) = a^k f(1) + c n^d sum_(i=0)^(k-1) (a/b^d)^i.
+  $<origin2>
+  We may apply @geosum to the series to get the closed-form expression of the complexity function, and we have:
+  #let var = $a/(b^d)$
+  $
+    sum_(i=0)^(k-1) (var)^i = ((var)^k - 1)/((var) - 1).
+  $
+  We know $k = log_b n$, so:
+  $
+    sum_(i=0)^(k-1) (var)^i = ((var)^(log_b n) - 1)/(var - 1).
+  $<closed_sum>
+  Now we can substitute @closed_sum to @origin2, and we have:
+  $
+    f(n) = a^k f(1) + 1/(var -1) c n^d ((var)^(log_b n) - 1).
+  $
+  Note that $(b^d)^(log_b n) = n^d$, and $a^(log_b n) = n^(log_b a)$, so we have:
+  $
+    f(n) &= n^(log_b a) f(1) + (c n^d) /(var - 1) (n^(log_b a)/n^d - 1)\
+    &= n^(log_b a) f(1) + (c n^d) /(var - 1) (n^(log_b a -d) - 1).
+  $
+  Again, let constants $C_1 = f(1)$, $C_2 = (c n^d)/(var - 1)$, 
+  $
+    f(n) &= C_1 n^(log_b a) + C_2 (n^(log_b a - d) ) - C_2\
+    &= C_1 n^(log_b a) + C_2 n^(log_b a) - C_2 n^d -C_2\
+    &= (C_1 + C_2) n^(log_b a) - C_2 (n^d + 1)
+  $
+  Hence we have 
+  $
+    f(n) = (C_1 + C_2) n^(log_b a) - C_2 (n^d + 1) <= (C_1 + C_2) n^(log_b a).
+  $
+  Therefore,
+  $
+    forall n in NN^+, exists C_0 in RR^+, C_0 > C_1 + C_2, "such that" f(n) <= C_0 n^(log_b a).
+  $
+  Thus, we have $f(n) = O(n^(log_b a))$ when $a > b^d$.
+
+  To conclude, we have proven all the statements in the theorem, and this completes the proof.
+]
+
+#problem[
+  Can we generalise the result of the conclusion of the Master Theorem to average case time complexity? Think about it!
+]
+
+#problem[
+  Are there any other way to speed up the derivations? Even though that may be less rigorous, but as long as it is justifiable.
+]
+
+=== Reflection on the Proof
+What an spetecular proof! Let's reflect on the proof of the Master Theorem. 
+
+In the proof process of the Master Theorem, we are essentially comparing the cumulative contributions of two parts of computational cost: one part comes from the top-down recursive calls of the algorithm, namely the "recursive cost," and the other part is the "non-recursive cost" additionally introduced at each level. Intuitively, this proof tells us that the dominant factor in the overall complexity of the algorithm depends on which part exhibits a faster growth rate after being summed up in the "recursion tree." Specifically, when the number of subproblems generated by the recursive calls (represented by $a$) and the reduction factor of the subproblem size (related to $b^d$) satisfy different relationships, the corresponding geometric series or summation of the entire process will exhibit completely different behaviors—sometimes the series diverges, indicating that the recursive calls dominate the complexity; sometimes the series converges, indicating that the non-recursive cost controls the overall complexity; and in critical cases, the two parts contribute equally, often resulting in an additional logarithmic factor. This discussion of the convergence and divergence of geometric series has actually touched upon important concepts in *mathematical analysis*, such as the limit of a sequence, the radius of convergence of a series, and boundary behaviors. From this perspective, the proof of the Master Theorem is not only an algorithm analysis tool but also a vivid example of mapping discrete recursive processes to continuous mathematical analysis (especially series analysis), allowing us to theoretically see the subtle and profound growth mechanism behind algorithmic complexity!
+
 == Example Use Cases
-
+With all the pains writing the proof, we can now use the Master Theorem to solve the time complexity of the algorithms that fits the divide-and-conquer recurrence relation, without writing lengthy proofs or derivations. Here are some examples of the use of the Master Theorem. These should be quite straightforward, as we have already discussed the intuition behind the theorem.
 === Binary Search
-
+Recall the binary search algorithm, which has a time complexity of $T(n) = T(n/2) + O(1)$, or $T(n) = T(n/2) + c$ We can apply the Master Theorem to solve the time complexity of the binary search algorithm, because it fits the definition of a divide-and-conquer recurrence relation. In this case, $a = 1$, $b = 2$, $d = 0$, so we actually have $a = b^d$. Therefore, the time complexity of the binary search algorithm is $O(log n)$. 
 === Karatsuba Algorithm
+Now we move on to analysing Karatsuba Algorithm with Master Theorem. Recall that previously we have to write a bunch of proofs to derive the time complexity of the Karatsuba algorithm, but now we can simply apply the Master Theorem to solve the time complexity at a glance. 
+
+The Karatsuba algorithm has a time complexity of $T(n) = 3T(n/2) + O(n)$, or $T(n) = 3T(n/2) + c n$. In this case, $a = 3$, $b = 2$, $d = 1$, so we have $a > b^d$. Therefore, the time complexity of the Karatsuba algorithm is $O(n^(log_2 3))$. 
+
+== Exercises
+#exercise[
+  Determine the time complexity for the following recurrence relations using the Master Theorem:
+  + $T(n) = 4T(n/2) + n$
+  + $T(n) = 2T(n/2) + 1$
+  + $T(n) = 3T(n/3) + n^2$
+  + $T(n) = 4T(n/2) + n^2$
+  + $T(n) = 8T(n/2) + n^2$
+]
+
+#exercise[
+  For each recurrence relation below, identify which case of the Master Theorem is applicable and then determine the time complexity:
+
+  + $T(n) = 2T(n/3) + 1$
+  + $T(n) = 4T(n/2) + n log n$
+  + $T(n) = 9T(n/3) + n^2$
+  + $T(n) = T(n/2) + 10$
+  + $T(n) = 16T(n/4) + n!$
+]
+
+#exercise[
+  These recurrences are slightly modified. Be careful when applying the Master Theorem, and consider if it's directly applicable or if adjustments are needed.
+
+  + T$(n) = 2T(n/2) + n log n$  (Compare with a similar one in Exercise 2 - note the $log n$ term!)
+  + $T(n) = 2T(n/4) + sqrt(n)$ (Note $n/4$ instead of $n/2$)
++ $T(n) = T(n/2) + n / log n$ (Is $f(n) = n / log n $in the polynomial form the theorem expects?)
++ $T(n) = 0.5T(n/2) + n$ (Note the coefficient 0.5 for the recursive term. Does the theorem still apply directly?)
++ $T(n) = 2T(n/2 - 1) + n$ (Note the $n/2 - 1$ instead of $n/2$. Consider the impact for large $n$.)
+]
+
+#exercise[
+  Consider the recurrence $T(n) = 2T(n/2) + n log n$.  The Master Theorem in its basic form might not directly apply in a very strict sense because $f(n) = n log n$ is not strictly of the form $n^d$. However, can you reason about the time complexity?  Hint:  Think about how the proof of the Master Theorem works and how the sum might change with log n factors.  (This is more of a thinking exercise and might require slightly more advanced analysis.)
+]
 
 #bibliography("ref.bib", style: "ieee")
