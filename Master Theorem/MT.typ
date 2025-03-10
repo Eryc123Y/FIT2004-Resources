@@ -2,6 +2,7 @@
 #import "@preview/lovelace:0.3.0": * // pseudocode
 #import "@preview/cetz:0.3.3"  // plot
 #import "@preview/mitex:0.2.5": * // latex to typst
+#import "@preview/quick-maths:0.2.1": shorthands
 
 #show: dvdtyp.with(
   title: "Master Theorem and Recurssion",
@@ -9,8 +10,20 @@
   author: "Eric Yang Xingyu",
   abstract: lorem(0),
 )
+
+// link format
 #show link: set text(fill: blue)
 
+// math notation overloads
+#show: shorthands.with(
+  ($+-$, $plus.minus$),
+  ($|-$, math.tack),
+  ($<--$, math.arrow.l.double.long),
+  ($-->$, math.arrow.r.double.long)
+)
+
+#let theorem-style = builder-thmbox(color: colors.at(6), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
+#let exercise = theorem-style("exercise", "Exercise")
 
 #outline()
 #pagebreak()
@@ -161,7 +174,7 @@ We just recap the definitions of the recurrence relation and the time complexity
 
 This is because the time complexity of the algorithm is usually dependent on the time complexity of solving the subproblems, and the number of subproblems is usually dependent on the size of the input. So we must derive a non-recursive solution for the recurrence relation, which is a direct function of $n$. If we do not do this, the recursive definition cannot be used to argue for time complexity notations, because it is not a function of $n$, but a transition equation that is dependent on the complexity of subproblems, despite the fact that the $T(n)$ is indeed indirectly dependent on $n$. However, *this is not a solid arguement to prove the time complexity of the algorithm, as per the definitions*!
 
-== Linear Recurrence Relations
+== First-order Linear Recurrence Relations with Constant Coefficients
 To facilitate the analysis of recursive algorithms, we first introduce the formal definition of a *linear recurrence relation with constant coefficients*.
 
 Solving recurrence relation is a vast topic in mathematical context, and there are many methods to solve recurrence relations, such as substitution method, master theorem, generating function, characteristic equation, strong/weak induction, and so on. Yet in the context of fundamental algorithm analysis, we are only engaged with *first order linear recurrence relations with constant coefficients*. The name could be a bit intimidating, but the idea is simple.
@@ -206,7 +219,7 @@ In the scope of FIT2004, we are only interested in the first-order linear recurr
 
 With the notion of recurrence relation explained, we can now move on to the methods of solving recurrence relations, which are crucial in the analysis of recursive algorithms. But do note that, the method we discuss here is only applicable to the first-order linear recurrence relation with constant coefficients, and it is not applicable to higher-order linear recurrence relations, non-linear recurrence relations, which are more complex and require more advanced mathematical tools to solve, such as generative function.
 
-== Recurssion Tree analysis
+== Recurssion Tree Method <recursionTree>
 One of the most intuitive methods to analyze the time complexity of basic recursive algorithms is by investigating the *recursion tree*. The recursion tree is a visual representation of the recursive calls made by the algorithm, which helps us understand the number of recursive calls and the time complexity of each call. In this method, we will try to find the time complexity of each call with respect to the input size, and then sum up the time complexity of all calls by traversing all levels of the recursion tree.
 
 In the context of Karatsuba's algorithm, we can represent the recursive calls as a tree, where each level of the tree corresponds to a recursive call, and the branching factor is the number of subproblems created at each level. In this case, we have a single root $T(n)$ and three children $T(n/2)$ at each level, so on and so forth. So this is actually a ternary tree.
@@ -251,7 +264,8 @@ Above is the recursion tree of the Karatsuba multiplication algorithm up to 3 le
 
   At level $k$, we have $3^k$ problems of size $n/2^k$ with total non-recursive cost $3^k dot c(n/2^k)$, where $c$ is some constant.
 
-  For the recursive cost, it's a quite different case, because we know that the base case is $T(1) = 1$, and each problem invokes three subproblems of size $n/2$, so we have $3T(n/2)$. In the end, we will have a total recursive cost of $3^k T(1)$. 
+  For the recursive cost, it's a quite different case, because we know that the base case is $T(1) = 1$, and each problem invokes three subproblems of size $n/2$, so we have $3T(n/2)$. In the end, we will have a total recursive cost of $3^k T(1)$.
+   
   
   This is quite anti-intuitive, but it is true, because the base case is a constant time operation, and $3^k$ is the number of subproblems at level $k$, which is a constant number! Because in this case $n$, the input size, is approaching infinity, so however large $3^k$ is, we always have $k < log_2 n < n$, so $3^k$ is regarded as a constant number. 
   
@@ -282,8 +296,68 @@ Above is the recursion tree of the Karatsuba multiplication algorithm up to 3 le
 
 As you see, the recursion tree method is quite intuitive, and we do not completely apply the properties of the recursive relation except for its recursive definition. Yet it is not always the case that we can solve the time complexity of the algorithm by recursion tree method, because the recursion tree method is only applicable to some simple recursive algorithms, where the number of subproblems is a constant number, and the size of the subproblems is a constant fraction of the input size. This method is usually more time-consuming than substitution method, which is more mechanical and less intuitive.
 
-== Substitution Method
-The other method to solve the time complexity of recursive algorithms is the substitution method. The substitution method is a more mechanical method, because it has almost the same treatment to all cases. It is also called "telescoping" method, because it is like telescoping a series, where we try to find a pattern in the time complexity of the algorithm, and then we use the base case and undetermined coefficients to derive an exact expression for the recurrence relation and thus prove the time complexity of the algorithm.
+After reading through the proof, you can try out some more basic exercise to grasp the concept of recursion tree method. Below are some recommended exercises.
+
+=== Exercises
+
+#exercise[
+  Use the recursion tree method to analyze the time complexity of Binary Search algorithm.
+]
+
+#exercise[
+  Derive the recurrence relation of the following recursive algorithm, and thus
+  use the recursion tree method to analyze the time complexity of the following recursive algorithm:
+  #figure(
+    kind: "algorithm",
+    supplement: [Algorithm],
+    pseudocode-list(booktabs: true)[
+      + *function* Recursive($n$)
+        + *if* $n$ = 1
+          +   *return* 1
+        + *else*
+          +   *return* Recursive($n/2$) + Recursive($n/2$)
+    ]
+  )
+]
+
+#exercise[
+  Use the recursion tree method to analyze the time complexity of the following recursive algorithm:
+  #figure(
+    kind: "algorithm",
+    supplement: [Algorithm],
+    pseudocode-list(booktabs: true)[
+      + *function* Recursive($n$)
+        + *if* $n$ = 1
+          +   *return* 1
+        + *else*
+          +   *return* 2 $times$ Recursive($n/2$)
+    ]
+  )
+]
+
+
+
+#exercise[
+  Analyse the time complexity of the following recursive algorithm to generate the $n$th Fibonacci number.
+  #figure(
+    kind: "algorithm",
+    supplement: [Algorithm],
+    pseudocode-list(booktabs: true)[
+      + *function* Fibonacci($n$)
+        + *if* $n$ = 0 *or* $n$ = 1
+          +   *return* $n$
+        + *else*
+          +   $a$ = Fibonacci($n - 1$)
+          +   $b$ = Fibonacci($n - 2$)
+          +   *return* $a + b$
+    ]
+  )
+  Find the number of recursive calls made by the algorithm for a given input $n$ (the number of nodes in the recursive tree), and prove that 
+  $ T(n) = Theta(phi.alt^n), "where" phi.alt = (1+sqrt(5))/2. $
+]
+
+== Telescoping Method
+The other method to solve the time complexity of recursive algorithms is the telescoping method. The method is a more mechanical method, because it has almost the same treatment to all cases. It is called "telescoping" method, because it is like telescoping a series, where we try to find a pattern in the time complexity of the algorithm, and then we use the base case and undetermined coefficients to derive an exact expression for the recurrence relation and thus prove the time complexity of the algorithm.
 
 But in a nutshell, this method is quite similar to mathematical induction. You need to find a pattern and take an educated guess, but you donot need hypothesis, because you already have the base case, which can be used to derive the exact expression of the recurrence relation.
 
@@ -320,6 +394,36 @@ Note that, the base case is $T(1) = O(1)$, which implies that $n/2^k = 1$, so $k
   The last step of using the formal definition of Big O notation to prove that $T(n) = O(n^(log_2 3))$ is the same as the recursion tree method, so we will not repeat it here.
 
 ]
+
+=== Exercises
+Below are some recommended exercises to practice the telescoping method. 
+#pagebreak()
+#exercise[
+  Use the telescoping method to analyze the time complexity of the following recursive algorithm:
+  #figure(
+    kind: "algorithm",
+    supplement: [Algorithm],
+    pseudocode-list(booktabs: true)[
+      + *function* Recursive($n$)
+        + *if* $n$ = 1
+          +   *return* 1
+        + *else*
+          +   *return* 5 $times$ Recursive($n/2$) + $n$
+    ]
+  )
+]
+
+#exercise[
+  Telescoping a closed-form expression for the following recursively defined time complexity:
+  $ T(n) = cases(
+  T(n/3) + T(2n/3) + n^2 ", if" n > 1,
+  1 ", if" n = 1
+  ) $
+  and thus prove the worst case time complexity of the algorithm is $O(n log n)$
+]
+
+
+
 == Mathematical Induction
 Another method to establish the time complexity of the Karatsuba algorithm is mathematical induction (MI). While this approach is not typically the most efficient for _deriving_ the time complexity of recursive algorithms from scratch—since it requires knowing the target complexity beforehand—it is an excellent tool for _verifying_ a conjectured time complexity, such as $T(n) = O(n^(log_2 3))$. In this case, we already suspect the complexity from the recursion tree and substitution methods, and induction provides a rigorous proof of correctness, especially when the target is known.
 
@@ -357,10 +461,226 @@ Another method to establish the time complexity of the Karatsuba algorithm is ma
 
   The induction confirms that $T(n) = O(n^(log_2 3))$, consistent with the recursion tree and substitution methods. This approach leverages the recurrence directly and verifies our earlier result rigorously.
 ]
+
+Again, induction is quite handy for proving the time complexity of recursive algorithms. But only when it is possible to make conjecture on the time complexity of the algorithm, and the conjecture is correct, or in the context of exam, you are given the conjecture, and you need to prove it. It is not a good method to derive the time complexity of the algorithm from scratch, because it requires some intuition and educated guess.
+#pagebreak()
+=== Exercises
+#exercise[
+  Discuss the worst time complexity of the following recursive algorithm, and prove it using the induction method:
+  #figure(
+    kind: "algorithm",
+    supplement: [Algorithm],
+    pseudocode-list(booktabs: true)[
+      + *function* Recursive($n$)
+        + *if* $n$ = 1
+          +   *return* 1
+        + *else*
+          +   *return* Recursive($n/2$) + Recursive($n/3$) + Recursive($n/6$)
+    ]
+  )
+  Hint: this is a different case where each subproblem has a different size, and therefore, we will have multiple summations in the final expression of the time complexity, which could not be combined. Take an educated guess, or the computation will be quite complex.
+]
+
+#exercise[
+  The merge sort algorithm has a time complexity of
+  $
+    cases(
+      2T(n/2) + n ", if" n > 1,
+      1 ", if" n = 1
+    )
+  $
+  Use the induction method to prove that the worst-case time complexity of the merge sort algorithm is $O(n log n)$.
+]
+
+== Substitution Method
+The last recommended method to solve the time complexity of recursive algorithms is the substitution method. It is somewaht similar to induction, but it is more mechanical and less intuitive. The method is based on the idea of making an educated guess of the time complexity of the algorithm, and then proving it by the definition of complexity notations by finding appropriate constants that satisfy the definitions.
+
+Now we show how to prove the worst case time complexity of the Karatsuba algorithm using the substitution method.
+
+#proof[
+  We start by making an educated guess that the time complexity of the Karatsuba algorithm is $T(n) = O(n^(log_2 3))$. We then prove this by substitution.
+
+  We assume that $T(n) <= c n^(log_2 3)$ for some constant $c > 0$ and all $n$ of the form $n = 2^m$, where $m$ is a positive integer. This is our hypothesis.
+
+  We need to prove that $T(n) = O(n^(log_2 3))$ for all $n$ of the form $n = 2^m$. We use the recurrence relation $T(n) = 3T(n/2) + c n$ and the base case $T(1) = O(1)$.
+
+  Substitute the hypothesis into the recurrence relation:  
+  $ T(n) <= 3c (n/2)^(log_2 3) + c n = 3c n^(log_2 3 - 1) + c n = c n^(log_2 3) (3/2) + c n. $  
+  We need $T(n) <= c n^(log_2 3)$, so:  
+  $ c n^(log_2 3) (3/2) + c n <= c n^(log_2 3) $  
+  must hold. This inequality is false unless the additional term $c n$ is accounted for. Instead, we adjust our hypothesis to include a lower-order term or choose $c$ sufficiently large. Since $log_2 3 approx 1.585 > 1$, $c n = O(n^(log_2 3))$, and for large $n$, $c n <= c_1 n^(log_2 3)$ for some constant $c_1$. Thus:  
+  $ T(n) <= c n^(log_2 3) + c n <= c n^(log_2 3) + c_1 n^(log_2 3) = (c + c_1) n^(log_2 3). $  
+  Choose $c$ large enough in the hypothesis (e.g., $c >= c_1$) to absorb lower-order terms across all $n$. To be precise, let’s hypothesize a form that matches
+]
+
+#remark[
+  The technique we play here is a bit abstruce, but we are basically playing with inequality properties. By proper assumption and manipulation, we construct a structure that fits into the definition of Big O notation, and then we prove that the structure is correct by the definition of Big O notation.
+]
+
+=== Exercises
+Below are some recommended exercises to practice the substitution method.
+#exercise[
+  Use the substitution method to analyze the time complexity of the following recursive algorithm:
+  #figure(
+    kind: "algorithm",
+    supplement: [Algorithm],
+    pseudocode-list(booktabs: true)[
+      + *function* Recursive($n$)
+        + *if* $n$ = 1
+          +   *return* 1
+        + *else*
+          +   *return* 2 $times$ Recursive($n/2$) + $n^2$
+    ]
+  )
+]
+
+#exercise[
+  It is known that an algorithm has a time complexity of $ T(n)= T(n-2) +3$, and $T(1)=T(2)=1$. Use the substitution method to find the worst-case time complexity of the algorithm.
+
+  Hint: this is a very special first-order linear recurrence relation, and we need two base cases to solve it. But our method is still applicable, as long as it is a first-order linear recurrence relation.
+]
 = Master Theorem: the Silver Bullet
-Congratulations! If you have made it this far, after understanding the above-mentioned methods, you are now ready to learn the Master Theorem! The Master Theorem is a powerful tool for solving recurrence relations of a specific form, and it allows us to get the time complexity of an algorithm in a simple and straightforward way, without the need for complex derivations or proofs or calculations like what we have done in the previous sections. However, the most important part is not how the theorem is like and how we can use it, but why it works. We will first discuss the intuition behind the Master Theorem from a basic case, and then generalise it to the Master Theorem.
+If you have made it this far, after understanding the above-mentioned methods, you are now ready to learn the Master Theorem! The Master Theorem is a powerful tool for solving recurrence relations of a specific form, and it allows us to get the time complexity of an algorithm in a simple and straightforward way, without the need for complex derivations or proofs or calculations like what we have done in the previous sections. However, the most important part is not how the theorem is like and how we can use it, but why it works. We will first discuss the intuition behind the Master Theorem from a basic case, and then generalise it to the Master Theorem.
+
+To make the following contents more readable, we introduce _devide and counquer recurrence relation_. Some of the contents in this part are from Discrete Math and Its Applications by Kenneth H. Rosen @rosenDiscreteMathematicsIts2018. We introduce one terminology from the book here, and we will use it in the following sections.
+
+#definition("Divide and Conquer Recurrence Relation")[
+  A *divide and conquer recurrence relation* is a recurrence relation of the form:
+  $ T(n) = a T(n/b) + f(n) $
+  where:
+  - $n$ is a non-negative integer (or, in some contexts, an integer).
+  - $a$ and $b$ are positive integers.
+  - $f(n)$ is a function of $n$, the size of the input.
+  - The recurrence relation describes the time complexity of a divide-and-conquer algorithm that divides the input of size $n$ into $a$ subproblems of size $n/b$ each, and combines the results of the subproblems in $f(n)$ time.
+  - In the context of algorithm analysis, we can assume that $n divides b$, i.e., $n$ is divisible by $b$, and thus $n/b in NN^+$.
+]
+
+This is something we are very familiar with, because most of the recursive algorithms we have discussed in the previous sections are divide-and-conquer algorithms, such as the Karatsuba algorithm, the merge sort algorithm, the quicksort algorithm, and so on. The Master Theorem is a generalisation of the divide-and-conquer recurrence relation, and it is a powerful tool to solve the time complexity of these algorithms.
+
+While in some cases, the problem is not evenly divided by the algorithm, so we have multiple $T(n)$ terms in the recurrence relation, to which the Master Theorem is not applicable. Our following discussion will be based on the assumption that all problems are evenly divided by the algorithm. Analising the time complexity of algorithms that do not evenly divide the problem is not something can be achived by the Master Theorem, and it requires more advanced mathematical tools, such as #link("https://math.libretexts.org/Bookshelves/Combinatorics_and_Discrete_Mathematics/Combinatorics_(Morris)/02%3A_Enumeration/07%3A_Generating_Functions/7.01%3A_What_is_a_Generating_Function")[generating function].
+
 == Introduction to a Base Case
+From previous examples and exercises, we find that, for all evenly divided algorithms, we have the compexity of the form:
+$ T(n) = a T(n/b) + f(n) $
+where $a$ and $b$ are positive integers, and $f(n)$ is a function of $n$. We can assume that $n$ is divisible by $b$, i.e., $n/b in NN^+$. In most cases, we can assume that $f(n)$ is a polynomial function of $n$, and we can write it as $f(n) = n^c$, where $c$ is a constant. Practically, f(n) has only one term, because in the context of algorithm analysis, we are only interested in the dominant term of the time complexity, and we can ignore the lower-order terms. So rigorously, $n^c$ is the most significant term in $f(n)$. 
 
-== Generalisation of the Base Case
+It is also important to distinguish that, $a T(n/b)$'s cost is caused by recursive calls themselves, while $f(n)$ are incurred out size of the recurssie calls. In this section, we call it *non-recursive cost*. But note that they are also calculated recursively despite the name, because they are a part of $T(n)$, and $T(n)$ is recursively defined!
 
+The core of *Master Theorem* is discuss the contribution of recursive cost and non-recursive cost to the time complexity of the algorithm. In this section, we only consider the case when $f(n)$ is constant, meaning that $f(n) = c$, where $c$ is some constant. 
+
+#theorem[
+  *Basic Master Theorem*:
+  let an increasing function $f(n)$ be given, and let $a$ and $b$ be positive integers, and they satisfy
+  $ f(n) = a f(n/b) + c $
+  $n$ is divisible by $b$, and $a,b in NN^+$, and $c$ is a constant(positive real number). then
+  $
+    f(n) = 
+    cases(
+    O(n^(log_b a)) "if" a > 1,
+    O(log n) "if" a = 1,
+    ).
+  $ 
+
+  Additionally, when $n=b^k$ and $a!=1$, where $k in NN^+$,
+  $
+    f(n) = C_1n^(log_b a) + C_2,
+  $
+  where $C_1 = f(1)+c/(a-1), C_2 = -c/(a-1)$.
+]
+#proof[
+  Frist, recall that in the examples of the Karatsuba algorithm, we conclude that the recursive part of the total cost can be expressed as the complexity of the base case times by the number of recursive calls, which in this case is $a^k$, where $a$ is the number of subproblems to be solved by one recursive call, and $k$ is the number of levels of the recursion tree. This is derived by applyting the recursive definition until we reach the base case. As for the non-recursive part, similarly, can be written as the sum of a constant series multiplied by the number of levels of the recursion tree, which is $c sum_(i=0)^(k-1) a^i$. With this motivation, consider let $n=b^k$, where $k in NN^+$, and $k$ is the number of levels of the recursion tree. We can write the total cost of the algorithm as:
+  $ 
+    f(n) = a^k f(1) +  sum_(i=0)^(k-1) a^i c = a^k f(1) + c sum_(i=0)^(k-1) a^i. 
+  $ 
+
+  This makes thing very simple, since we only need to discuss the case of $a = 1$ and $a>1$ separately.
+
+  *when $a = 1$*: $sum_(i=0)^(k-1)a^i = sum_(i=0)^(k-1)1 = k$, and thus we have 
+  $
+    f(n) = f(1) + c k.
+  $
+
+  As per stated in the theorem, we have $n = b^k  --> k = log_b n$, therefore
+  $
+    f(n) = f(1) + c log_b n.
+  $
+  Now we can discuss the worst-case time complexity of the algorithm when $a=1$.
+
+  Since our base case is constant, we can conclude that $f(n) = O(log n)$ when $a=1$.
+  Rigorously, 
+  $
+    forall n in NN^+, exists c_0 in RR^+, c_0 > c, "such that" f(n) <= c_0 log n.
+  $
+  Hence, $T(f(n)) = O(log n)$ when $a=1$.
+
+  #remark[
+    *(Optional)* Just remark for discussing the case when $n$ is not a power of $b$. In this case, we must have $b^k < n < b^(k+1)$, where $k$ is a positive integer. We have assumed that $f(n)$ is a increasing function, so we have
+    $
+      f(n) <= f(b^(k+1)) = f(1) + c(k+1) = f(1) + c +c k <= f(1) + c + c log_b n.
+    $
+    This also helps to conclude that $f(n) = O(log n)$ when $a=1$. Rigorously,
+    $
+    forall n in NN^+,  exists c_0 in RR^+, c_0 > c, "such that" f(n) <= c_0 log n.
+    $
+    Hence, $T(f(n)) = O(log n)$ when $a=1$.
+  ]
+  *when a > 1*: we still assume that $n = b^k$, where $k in NN^+$, and $k$ is the number of levels of the recursion tree. Recall that 
+  $
+  f(n) = a^k f(1) + c sum_(i=0)^(k-1) a^i,
+  $ and we have $sum_(i=0)^(k-1) a^i = (a^k - 1)/(a - 1)$ because it's a geometric series of common ratio $a$. Therefore, we have
+  $
+    f(n) &= a^k f(1) + c (a^k - 1)/(a - 1)\
+    &= a^k f(1)  + (c a^k)/(a-1) - c/(a-1)\
+    &= a^k (f(1) + c/(a-1)) - c/(a-1)\
+    &=a^(log_b n) (f(1) + c/(a-1)) - c/(a-1)\
+    &=n^(log_b a) (f(1) + c/(a-1)) - c/(a-1)\
+    &= C_1 n^(log_b a) + C_2
+  $
+  where $ C_1 = f(1) + c/(a-1)$, $C_2 = -c/(a-1) $.
+  We can easily derive the worst case time complexity of the algorithm when $a>1$:
+  $
+    forall n in NN^+, exists C_0 in RR^+, C_0 > C_1, "such that" f(n) <= C_0 n^(log_b a),
+  $
+  and hence, $T(f(n)) = O(n^(log_b a))$ when $a>1$.
+
+#pagebreak()
+
+  #remark[
+    *(Optional)* Again we just want to show the treatment of the case when $n$ is not a power of $b$, for those who are interested. In this case, we must have $b^k < n < b^(k+1)$, where $k$ is a positive integer. By our assumption that $f(n)$ is an increasing function, we have
+    $
+      f(n) &<= f(b^(k+1)) = C_1 a^(k+1) + C_2\
+      &<= (C_1 a) a^(log_b n) + C_2\
+      &= (C_1 a) n^(log_b a) + C_2\
+    $
+    where $k <= log_b n < k+1$.
+
+    Again, by the formal definition of Big O notation
+    $
+      forall n in NN^+, exists C_0 in RR^+, C_0 > C_1, "such that" f(n) <= C_0 n^(log_b a).
+    $
+    Hence, $T(f(n)) = O(n^(log_b a))$ when $a>1$.
+  ]
+
+  To conclude, we have proven all the statements in the theorem.
+]
+
+Below is a optional exercise to check your understanding.
+#problem[
+  Prove the same result using mathematical induction.
+]
+
+Now we can reflect on the proof of this basic case of the Master Theorem. The proof is quite simple, and it is based on the intuition that the time complexity of the algorithm is recursively defined and we can find an closed-form, exact expression for the divide-and-conquer recurrence relation.
+
+== Generalisation of the Theorem
+Now we can try to take the previous results to a broader context. Previously, we considered only the case when the non-recursive component is only a constant function of $n$. But in practice, the non-recursive component can be a polynomial function of $n$, and in the previous definition of divide-and-conquer recurrence relation that:
+$
+  T(n) = a T(n/b) + f(n),
+$
+we can generalise to $f(n) = c n^d$, where $c, d in RR^+ $ and are constants, Thus, the previous case is a special case of this general case, where $d = 0$, so that we have a constant function of $f(n)=c$.
 == Example Use Cases
+
+=== Binary Search
+
+=== Karatsuba Algorithm
+
+#bibliography("ref.bib", style: "ieee")
