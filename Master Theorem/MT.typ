@@ -53,6 +53,8 @@
 #let exercise-style = builder-thmbox(color: colors.at(0), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
 #let exercise = exercise-style("exercise", "Exercise")
 
+#let solution-style = builder-thmbox(color: colors.at(1), shadow: (offset: (x: 3pt, y: 3pt), color: luma(70%)))
+#let solution = solution-style("solution", "Solution")
 
 #outline()
 #pagebreak()
@@ -922,7 +924,74 @@ The Karatsuba algorithm has a time complexity of $T(n) = 3T(n/2) + O(n)$, or $T(
 ]
 
 #exercise[
-  Consider the recurrence $T(n) = 2T(n/2) + n log n$.  The Master Theorem in its basic form might not directly apply in a very strict sense because $f(n) = n log n$ is not strictly of the form $n^d$. However, can you reason about the time complexity?  Hint:  Think about how the proof of the Master Theorem works and how the sum might change with log n factors.  (This is more of a thinking exercise and might require slightly more advanced analysis.)
+  Consider the recurrence relation:
+  $ T(n) = 2T(sqrt(n)) + log_2 n. $
+  Although rather daunting at first sight, we can solve this recurrence by transforming it onto one that we have seen before!
+  + Make the substitution $m = log_2 n$ to obtain a new recurrence relation in terms of $m$, which should look like $T(2^m) = dots$
+  + Define a new function $S(m) = T(2^m)$, and rewrite your recurrence relation from last problem in terms of $S(m)$.
+  + Solve the new recurrence relation for $S(m)$.
+  + Use your solution from last question to prove an asymptotic bound in big-O notation for $T(n)$.
 ]
+
+#set math.equation( 
+  numbering: none
+  )
+
+#solution[
+  1. We have
+  $
+    m = log_2 n <--> 2^m = n,
+  $
+  hence,
+  $
+    T(n) = 2T(sqrt(n)) + log_2 n <--> T(2^m) = 2T(2^(m/2)) + m.
+  $
+  2. We have $S(m) = T(2^m) --> T(2^(m/2)) = S(m/2)$, with this abstraction, we have
+  $
+    T(n) = S(m) = 2S(m/2) + m.
+  $
+  3. We can apply the Master Theorem to solve the new recurrence relation, and we have $a = 2$, $b = 2$, $d = 1$, so $a = b^d$. Therefore, the time complexity of the new recurrence relation is $O(m log m)$.
+  But we still attach the detailed solution by telescoping here:
+
+  Expanding the recurrence:
+
+  #mitex(
+    `
+    \begin{align*}
+    S(m) &= 2(2S(m/4) + m/2) + m = 2^2 S(m/4) + 2m/2 + m = 2^2 S(m/4) + 2m \\
+    S(m) &= 2^2 (2S(m/8) + m/4) + 2m = 2^3 S(m/8) + 2^2 m/4 + 2m = 2^3 S(m/8) + 3m \\
+    &\dots \\
+    S(m) &= 2^k S(m/2^k) + k \cdot m
+    \end{align*}
+    `
+  )
+  We continue until $m/2^k = 1$, which means $2^k = m$, or $k = log_2 m$. Assuming a base case $S(1) = C$ (a constant), we have:
+
+  #mitex(
+    `
+    S(m) = 2^{\log_2 m} S(1) + \log_2 m \cdot m = m \cdot S(1) + m \log_2 m = m(C + \log_2 m)
+    `
+  )
+  Thus we have obtained the closed-form expression for $S(m)$.
+
+  4. We will prove that $T(n) = O(m log m)$ by the definition of Big O notation. 
+
+  #proof[
+  We use the previous expression that 
+  $ 
+    T(n) = S(m) = m(C + log_2 m)
+  $
+  to show that $T(n) = O(m log m)$ by the definition of Big O notation.
+  Since 
+  $
+    T(n) = S(m) = m log_2 m (C/(log_2 m) + 1),
+  $
+  $
+    forall n in NN^+, exists C_0 in RR^+, C_0 > C/(log_2 m) + 1, "such that" T(n) <= C_0 m log_2 m.
+  $
+  Therefore, $T(n) = O(m log m)$.
+  ]
+]
+
 
 #bibliography("ref.bib", style: "ieee")
