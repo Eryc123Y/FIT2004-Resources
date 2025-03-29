@@ -5,7 +5,7 @@
 #import "@preview/quick-maths:0.2.1": shorthands
 #import "@preview/diagraph:0.3.2": * // graph
 
-#let is_lecture = false
+#let is_lecture = true
 
 #show: dvdtyp.with(
   title: "From Structural Induction to Graph Theory",
@@ -528,11 +528,44 @@ For example, in the previous graph, the sequence $A->B->C->D->A$ is a cycle.
 #definition("Euler Path")[
   An Euler path in a graph is a path that visits every edge exactly once. An Euler path may start and end at different vertices.
 ]
-Still using @graphWithCycle as an example
 
 #definition("Euler Circuit")[
   An Euler circuit in a graph is a cycle that visits every edge exactly once. An Euler circuit starts and ends at the same vertex.
 ]
+
+#problem[
+  Can you find an Euler path/cycle in @graphWithCycle?
+]
+
+#theorem("Euler's Theorem")[
+  Let $G = (V, E)$ be a finite, connected, undirected graph, then $G$:
+  - Has an Euler path if and only if it has exactly two or zero vertices of odd degree.
+  - Has an Euler circuit if and only if all vertices have even degree.
+] 
+#if is_lecture{
+  proof[ 
+    We will prove Euler's theorem by proving the necessity and sufficiency of the conditions. We first proceed to prove the conclusion on Euler circuit.
+
+    *Necessity:* if $G$ has an Euler circuit, then every vertex has even degree. Let $C$ be an Euler circuit in $G$. For any vertex $v in V$, every time $C$ passes through $v$, it uses two edges incident to $v$. Therefore, the degree of $v$ must be even.
+
+    *Sufficiency:* Let $G$ have all vertices of even degree. We will construct an Euler circuit in $G$. We start at any vertex $v_0$ and keep moving along edges until we return to $v_0$. Since every vertex has even degree, we can always find an unvisited edge to move along. Therefore, we can construct an Euler circuit in $G$.
+
+    Now we proceed to prove the conclusion on Euler path.
+
+    *Necessity:* Let $P$ be an euler path in $G$, and its endpoints are $u$ and $v$.
+    - for any vertex $w in V$ that is not end point, every time $P$ passes through $w$, it uses two edges incident to $w$. Therefore, the degree of $w$ must be even.
+    - for the endpoints $u$ and $v$
+      - if $u = v$, then $u$ has even degree. Because we leave $u$ and return to $u$,taking two edges. In this case, all vertices have even degree, so we have zero vertices of odd degree when the euler path is a circuit.
+      - if $u != v$, then $u$ and $v$ have odd degree. Because we leave $u$ and return to $v$, taking two edges. In this case, we have two vertices of odd degree when the euler path is a path.
+    
+    *Sufficiency:* Let $G$ have exactly two or zero vertices of odd degree. We will construct an Euler path in $G$.
+    - This is a trivial case, if $G$ has zero vertices of odd degree, then we can start at any vertex and keep moving along edges until we return to the starting vertex. This forms an Euler circuit.
+    - If $G$ has two vertices of odd degree, we can start at one of the vertices of odd degree and end at the other. To show this, we can extend the graph $G$ by adding an edge $(u, v)$, where $u$ and $v$ are the two vertices of odd degree. Thus, in the new graph $G'$, all vertices have even degree, and we can construct an Euler circuit in $G'$. Removing the edge $(u, v)$ from the Euler circuit in $G'$, we obtain an Euler path in $G$.
+
+    Therefore, we have proved Euler's theorem.
+  ]
+}
+
 
 === Connected & Ascyclic Graph
 #definition("Connected Graph")[
