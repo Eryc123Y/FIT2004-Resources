@@ -1,0 +1,18 @@
+\prob{
+    Prove that if $a$, $b$, and $c$ are integers, where $a\neq 0$, such that $a\mid b$ and $a\mid c$, then $a\mid mb + nc$ whenever $m$ and $n$ are integers.
+}
+\pf{
+    Since $a\mid b$ and $a\mid c$, we have $a \mid b+c$. Hence, we have $b + c = a k_1$ for some integer $k_1$. Let $b = ak_1 - c$ and $c = ak_1-b$ in $mb + nc$,
+    we have:
+    \begin{align*}
+        mb + nc &= m(ak_1 - c) + n(ak_1 - b) \\
+        &= ak_1(m+n) - mc - nb \\
+        &= a(m+n)k_1 - mc - nb
+    \end{align*}
+    Since $b = ak_2$ and $c = ak_3$, we have:
+    \begin{align*}
+        mb + nc &= a(m+n)k_1 - m(ak_2) - n(ak_3) \\
+        &= a(m+n)k_1 - ak_2m - ak_3n \\
+        &= a((m+n)k_1 - k_2m - k_3n)
+    \end{align*}
+}

@@ -1,0 +1,701 @@
+\documentclass[oneside]{book}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{thmtools}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{framed}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{environ}
+\usepackage{tcolorbox}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{csquotes}
+\usepackage[backend=biber, style=authoryear]{biblatex}
+\tcbuselibrary{theorems, skins, breakable}
+\addbibresource{references.bib}
+
+
+\setstretch{1.2}
+\geometry{
+    textheight=9in,
+    textwidth=5.5in,
+    top=1in,
+    headheight=12pt,
+    headsep=25pt,
+    footskip=30pt
+}
+
+% Variables
+\def\notetitle{Intro to Number Theory}
+\def\noteauthor{
+    \textbf{Lecture} and\\ 
+    {\LaTeX} by Eric Xingyu Yang\\
+    Monash University\\
+	\textcite{rosenDiscreteMathematicsIts2018} is the main reference.
+	}
+\def\notedate{Semester one 2025}
+
+% The theorem system and user-defined commands
+\input{theorems.tex}
+\input{commands.tex}
+
+% ------------------------------------------------------------------------------
+
+\begin{document}
+\title{\textbf{
+		\LARGE{\notetitle} \vspace*{10\baselineskip}}
+}
+\author{\noteauthor}
+\date{\notedate}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+% ------------------------------------------------------------------------------
+
+\chapter{Divisibility and Modular Arithmetic}
+\section{Division}
+One of the most fundamental concepts in number theory is the division of integers.
+Whether a number is divisible by another number? How can we determine the
+divisibility of two numbers? How can we express one number in terms of another?
+These questions lead us to the foundation of number theory, which is one of the most
+abstruse and beautiful branches of mathematics.
+
+Number theory plays a crucial role in many fields:
+\begin{itemize}
+	\item \textbf{Cryptography}: The security of many encryption algorithms relies on the properties of prime numbers and modular arithmetic.
+	\item \textbf{Algebraic Geometry}: Number theory is used to study the properties of algebraic varieties over finite fields. This is
+	      crucial in coding theory and cryptography as well. This is also known as the hardest math branch encompassing almost all the math fields.
+	      An example is
+	      \href{https://cryptobook.nakov.com/asymmetric-key-ciphers/elliptic-curve-cryptography-ecc}{Elliptic Curve Cryptography(ECC)}.
+	\item \textbf{Computer Science}: In computer science, number theory is used in algorithms, data structures, and complexity theory.
+	      A typical example is the design of \href{https://en.wikipedia.org/wiki/Hash_function}{hash functions}.
+	\item \textbf{Optimization and Operations Research}: Number theory is used in optimization problems, such as integer programming and combinatorial optimization.
+	      In some cases, we can use number theory notions to simplify the problem, such as \textbf{modular congruence} and \textbf{Diophantine equations}.
+\end{itemize}
+
+It might be trivial, since we have been using division since we were kids,
+but it is necessary to give division a formal definition.
+\defn{True Division}{
+	Formally, the division of two real numbers \( a, b \in \mathbb{R} \) is defined as:
+	\[
+		a \div b = c
+	\]
+	where \( c \) is the unique number such that:
+	\[
+		a = b \times c.
+	\]
+	In other words, $ a \div b = c \iff a = b \times c $.
+	The division is defined for all \( a \in \mathbb{R} \) and \( b \in \mathbb{R} \setminus \{0\} \).
+}
+
+The division is not defined for \( b = 0 \) because it leads to an undefined result.
+This is actually a very polemical topic in the history of mathematics, and gave birth to
+the \textbf{division by zero} paradox, contributing to the formalization of infinity, which is
+a milestone in the development of calculus and analysis.
+
+While this is only an intro, in number theory, we are more interested in the division of integers. Why?
+\fact{
+	\begin{itemize}
+		\item \textbf{Integers are the building blocks of all numbers}: All numbers can be expressed as a combination of integers.
+		\item \textbf{Integers are discrete}: Unlike real numbers, integers are discrete and can be counted. This makes them easier to work with in many cases.
+		\item \textbf{Unique factorization}: Every integer can be \textbf{uniquely} factored into other numbers, which is a fundamental property of integers.
+	\end{itemize}
+}
+
+
+\defn{Division with Remainder}{
+	The division of a number \( a \) by a non-zero number \( b \) is denoted by \( a \div b \) or \( \frac{a}{b} \), and it gives the quotient \( q \) and possibly a remainder \( r \). The operation can be written as:
+	\[
+		a = b \times q + r
+	\]
+	where \( 0 \leq r < b \) and \(q \in \mathbb{Z}\).
+}
+
+\defnr{Divisibility}{divisibility}{
+	If $a$ and $b$ are integers with $a \neq 0$, we say that $a$ divides $b$ if there is an integer $c$ such that
+	$b = a\times c$ (or equivalently, if $b$ an is an integer). When $a$ divides $b$ we say that $a$ is a factor or divisor of
+	$b$, and that $b$ is a multiple of $a$. The notation a $\mid$ b denotes that $a$ divides $b$. We write $a \nmid b$ when $a$ does not divide $b$
+}
+
+Divisibility lays the foundation of number theory, and later we will introduce how to use it to define modular arithmetic.
+
+\ex{
+	For example, we have $4\mid 20$, because $20\div4$ gives an integer, however, $4\nmid 21$, as the answer
+	cannot be represented as integer. Besides, we have:
+	\begin{equation}
+		a\mid b \iff \exists c (ac=b).
+	\end{equation}
+}
+
+\prob{
+	Prove that if $\displaystyle a$ and $\displaystyle b$ are integers and $\displaystyle a$ divides $\displaystyle b$, then $\displaystyle a$ is odd or $\displaystyle b$ is even.
+}
+\pf{
+	We could try proof by contrapositive. Suppose for $\displaystyle a$ is even and $\displaystyle b$ is odd,
+	$\displaystyle a,b\in \mathbb{Z} ,\ a\mid b$. Then $\displaystyle b=ka$ for some integer $\displaystyle k$.
+	Make $\displaystyle a=2n,\ b=2n+1,\ n\in \mathbb{Z}$, then there should be $\displaystyle 2n+1=2kn$.
+	However, in this case we have $\displaystyle k=\frac{2n+1}{2n}$, meaning that $\displaystyle k$ is not an
+	integer, which contradict the assumption. This completes the proof.
+}
+
+We may find more properties of divisibility.
+\prop{\begin{itemize}
+		\item \textbf{Transitive property}: If \( a \mid b \) and \( b \mid c \), then \( a \mid c \).
+		      \begin{itemize}
+			      \item If $a \mid b$ and $a \mid c$, then $a \mid (b+c)$.
+			      \item If $a \mid b$ then $a \mid bc $ for any integer $c$.
+		      \end{itemize}
+		\item \textbf{Reflexive property}: For any integer \( a \), \( a \mid a \).
+		\item \textbf{Symmetric property}: If \( a \mid b \), then \( b \nmid a \) unless \( a = b \).
+		\item \textbf{Trivial property}: If \( a = 0 \), then \( 0 \mid b \) for all integers \( b \).
+	\end{itemize}}
+
+\pf{
+	If \( a \mid b \) and \( b \mid c \), then there exist integers \( p \) and \( q \) such that \( b = ap \) and \( c = bq \). Substituting the expression for \( b \) into the equation for \( c \) gives \( c = (ap)q = a(pq) \). Since \( pq \) is an integer, \( a \mid c \).
+
+	Since \( a \mid b \) and \( a \mid c \), there exist integers \( m \) and \( n \) such that \( b = am \) and \( c = an \). Therefore, \( b+c = am + an = a(m+n) \), and since \( m+n \) is an integer, it follows that \( a \mid (b+c) \).
+
+	Given \( a \mid b \), there exists an integer \( k \) such that \( b = ak \). For any integer \( c \), \( bc = a(kc) \). Since \( kc \) is an integer (because the product of two integers is an integer), \( a \mid bc \).
+
+}
+
+\prob{
+	Prove that if $a$, $b$, and $c$ are integers, where $a\neq 0$, such that $a\mid b$ and $a\mid c$, then $a\mid mb + nc$ whenever $m$ and $n$ are integers.
+}
+\pf{
+	Since $a\mid b$ and $a\mid c$, we have $a \mid b+c$. Hence, we have $b + c = a k_1$ for some integer $k_1$. Let $b = ak_1 - c$ and $c = ak_1-b$ in $mb + nc$,
+	we have:
+	\begin{align*}
+		mb + nc & = m(ak_1 - c) + n(ak_1 - b) \\
+		        & = ak_1(m+n) - mc - nb       \\
+		        & = a(m+n)k_1 - mc - nb
+	\end{align*}
+	Since $b = ak_2$ and $c = ak_3$, we have:
+	\begin{align*}
+		mb + nc & = a(m+n)k_1 - m(ak_2) - n(ak_3) \\
+		        & = a(m+n)k_1 - ak_2m - ak_3n     \\
+		        & = a((m+n)k_1 - k_2m - k_3n),
+	\end{align*}
+	where $(m+n)k_1 - k_2m - k_3n \in \mathbb{Z}$.
+	Hence, $a\mid mb + nc$.
+}
+
+\section{Modular Arithmetic}
+
+\subsection{Div and Mod Operator}
+
+\notn{
+	\textbf{div} and \textbf{mod} are two operators that are used to perform division and find the remainder of a division operation, respectively.
+	\begin{itemize}
+		\item \textbf{div}: The div operator is used to perform integer division. It returns the quotient of the division operation, discarding any remainder.
+		      For example, \( 7 \div 3 = 2 \) because \( 3 \times 2 = 6 \) and the remainder is discarded.
+		\item \textbf{mod}: The mod operator is used to find the remainder of a division operation. It returns the remainder after dividing one number by another.
+		      For example, \( 7 \mod 3 = 1 \) because \( 7 = 3 \times 2 + 1 \).
+
+		      We also use \% to denote the mod operator, which is more common in programming languages. But we will use \textbf{mod} in mathematical context.
+	\end{itemize}
+}
+\rmkb{
+	Note that, the \textbf{mod} operator should be bold in a printed document, since we need to differentiate it with $\mod$, which is used for modular congruence.
+}
+
+You may find that the \textbf{div} and \textbf{mod} operators are actually binary and can be encapsulated by binary equations.
+
+\defn{Div and Mod}{
+	Let \(\mathbb{Z}\) denote the set of all integers. We define two functions as follows:
+
+	\begin{enumerate}
+		\item The integer division function, denoted \(\operatorname{div} : \mathbb{Z} \times (\mathbb{Z} \setminus \{0\}) \to \mathbb{Z}\), is defined by
+		      \[
+			      \operatorname{div}(a, b) =
+			      \begin{cases}
+				      \left\lfloor \frac{a}{b} \right\rfloor, & \text{if } \frac{a}{b} \geq 0, \\
+				      \left\lceil \frac{a}{b} \right\rceil,   & \text{if } \frac{a}{b} < 0,
+			      \end{cases}
+		      \]
+		      where \(\left\lfloor x \right\rfloor\) is the floor function returning the greatest integer less than or equal to \(x\), and \(\left\lceil x \right\rceil\) is the ceiling function returning the smallest integer greater than or equal to \(x\).
+
+		      This choice ensures that the quotient \(\operatorname{div}(a,b)\) is selected to guarantee a non-negative remainder in the corresponding modulo operation.
+
+		\item The modulo function, denoted \(\operatorname{mod} : \mathbb{Z} \times (\mathbb{Z} \setminus \{0\}) \to \mathbb{Z}\), is defined by
+		      \[
+			      \operatorname{mod}(a, b) = a - b \cdot \operatorname{div}(a, b),
+		      \]
+		      which yields the unique remainder satisfying
+		      \[
+			      0 \leq \operatorname{mod}(a,b) < |b|.
+		      \]
+	\end{enumerate}
+
+	\bigskip
+
+	\textbf{Rounding direction of \(\operatorname{div}(a,b)\) depends on signs of \(a\) and \(b\) as summarized in the following table:}
+
+	\[
+		\begin{array}{|c|c|c|c|c|}
+			\hline
+			\text{Case} & a & b & \frac{a}{b} & \operatorname{div}(a,b) \text{ rounding} \\
+			\hline
+			1           & + & + & +           & \text{floor}                             \\
+			2           & + & - & -           & \text{ceiling}                           \\
+			3           & - & + & -           & \text{ceiling}                           \\
+			4           & - & - & +           & \text{floor}                             \\
+			\hline
+		\end{array}
+	\]
+
+	\bigskip
+
+	Here, "\text{floor}" means \(\left\lfloor \frac{a}{b} \right\rfloor\) and "\text{ceiling}" means \(\left\lceil \frac{a}{b} \right\rceil\).
+
+	\bigskip
+}
+These definitions ensure that for any integers \(a, b\) with \(b \neq 0\), the division algorithm holds:
+\[
+	a = b \cdot \operatorname{div}(a, b) + \operatorname{mod}(a, b),
+\]
+with the remainder \(\operatorname{mod}(a,b)\) uniquely satisfying
+\[
+	0 \leq \operatorname{mod}(a,b) < |b|.
+\]
+Let's try to prove them!
+
+
+\lemp{Range of Mod Operation}{
+For any integers $a$ and $b$ with $b \neq 0$, the modulo operation satisfies:
+\[
+	\operatorname{mod}(a, b) \in [0, |b|),
+\]
+This means that the result of the modulo operation is always a non-negative integer less than the absolute value of $b$.
+}{
+According to the Division Algorithm, for any integer $a$ and non-zero integer $b$, there exist unique integers $q$ and $r$ such that:
+\[
+	a = bq + r,
+\]
+and the remainder satisfies
+\[
+	0 \leq r < |b|.
+\]
+Here, we let
+\[
+	q = \operatorname{div}(a, b), \quad r = \operatorname{mod}(a, b).
+\]
+This means that the value of the modulo operation $\operatorname{mod}(a,b)$ is the remainder $r$, satisfying the above inequality.
+By definition, we have
+\[
+	\operatorname{mod}(a, b) = a - b \cdot \operatorname{div}(a, b).
+\]
+To ensure $0 \leq \operatorname{mod}(a,b) < |b|$, we need to choose a suitable quotient so that the remainder falls within this interval. In the definition based on the floor function, when $b>0$, selecting $\operatorname{div}(a,b) = \left\lfloor \frac{a}{b} \right\rfloor$ can meet the requirement. But when $b < 0$, $\left\lfloor \frac{a}{b} \right\rfloor$ may not satisfy this condition.
+Therefore, to ensure that the remainder is non-negative and less than $|b|$, when $b < 0$, we should define
+\[
+	\operatorname{div}(a,b) = \left\lceil \frac{a}{b} \right\rceil,
+\]
+such that
+\[
+	0 \leq a - b \cdot \operatorname{div}(a,b) < |b|.
+\]
+In summary, regardless of whether $b$ is positive or negative, there always exists a suitable integer quotient $\operatorname{div}(a,b)$ such that the remainder $\operatorname{mod}(a,b)$ satisfies
+\[
+	0 \leq \operatorname{mod}(a,b) < |b|.
+\]
+This completes the proof.
+}
+
+\prob{
+	Prove that for any integers $a$ and $b$ with $b \neq 0$,
+	$$
+		a = b \cdot \operatorname{div}(a, b) + \operatorname{mod}(a, b).
+	$$
+}
+\pf{
+	By the division algorithm, for any integers \(a\) and \(b\) with \(b \neq 0\), there exist unique integers \(q\) and \(r\) such that
+	\[
+		a = bq + r,
+	\]
+	where
+	\[
+		0 \leq r < |b|.
+	\]
+	Here, \(\operatorname{div}(a, b)\) is defined as the quotient \(q\), and \(\operatorname{mod}(a, b)\) is defined as the remainder \(r\).
+	Hence, by definition,
+	\[
+		a = b \cdot \operatorname{div}(a, b) + \operatorname{mod}(a, b),
+	\]
+	with
+	\[
+		0 \leq \operatorname{mod}(a, b) < |b|.
+	\]
+	This completes the proof.
+}
+
+\prob{
+	Use the $\operatorname{div}$ and $\operatorname{mod}$ functions from the division algorithm to define the following three Boolean functions:
+
+	\textbf{AND Function}: Define the AND operation for Boolean variables $x, y \in \{0,1\}$, i.e.,
+	\[
+		\operatorname{and}(x,y) = ?
+	\]
+
+	\textbf{OR Function}: Define the OR operation for Boolean variables $x, y \in \{0,1\}$, i.e.,
+	\[
+		\operatorname{or}(x,y) = ?
+	\]
+
+	\textbf{XOR Function}: Define the XOR operation for Boolean variables $x, y \in \{0,1\}$, i.e.,
+	\[
+		\operatorname{xor}(x,y) = ?
+	\]
+
+	Please define these functions using expressions containing only $\operatorname{div}$ and $\operatorname{mod}$.
+
+}
+
+\subsubsection*{Solution}
+Assuming \(x,y \in \{0,1\}\), consider the sum \(x+y\) which can be 0, 1, or 2. Using the division algorithm with divisor 2, we can represent \(x+y\) as:
+\[
+	x + y = 2 \cdot \operatorname{div}(x+y, 2) + \operatorname{mod}(x+y, 2).
+\]
+\begin{enumerate}
+	\item \textbf{AND Function}
+	      The AND operation corresponds to whether both inputs are 1, which happens only if the sum is 2:
+	      \[
+		      \operatorname{and}(x,y) = \operatorname{div}(x+y, 2).
+	      \]
+	      This yields 1 only when \(x=y=1\).
+	      \begin{figure}[H]
+		      \centering
+		      \caption{Truth Table for AND: \(\operatorname{and}(x,y) = \operatorname{div}(x+y, 2)\)}
+		      \[
+			      \begin{tabular}{|c|c|c|c|}
+				      \hline
+				      \(x\) & \(y\) & \(x+y\) & \(\operatorname{and}(x,y)\)     \\
+				      \hline
+				      0     & 0     & 0       & \(\operatorname{div}(0,2) = 0\) \\
+				      0     & 1     & 1       & \(\operatorname{div}(1,2) = 0\) \\
+				      1     & 0     & 1       & \(\operatorname{div}(1,2) = 0\) \\
+				      1     & 1     & 2       & \(\operatorname{div}(2,2) = 1\) \\
+				      \hline
+			      \end{tabular}
+		      \]
+	      \end{figure}
+	\item \textbf{OR Function}
+	      Using De Morgan's law, the OR can be written in terms of AND as:
+	      \[
+		      \operatorname{or}(x,y) = 1 - \operatorname{and}(1-x, 1-y).
+	      \]
+	      Using the expression for AND above:
+	      \[
+		      \operatorname{or}(x,y) = 1 - \operatorname{div}\big(2 - (x + y), 2\big).
+	      \]
+	      This expression is 1 if either input is 1, and 0 only when both are 0.
+	      \begin{figure}[H]
+		      \centering
+		      \caption{Truth Table for OR: \(\operatorname{or}(x,y) = 1 - \operatorname{div}(2 - (x + y), 2)\)}
+		      \[
+			      \begin{tabular}{|c|c|c|c|c|c|}
+				      \hline
+				      \(x\) & \(y\) & \(x+y\) & \(2 - (x+y)\) & \(\operatorname{div}(2 - (x+y), 2)\) & \(\operatorname{or}(x,y)\) \\
+				      \hline
+				      0     & 0     & 0       & 2             & 1                                    & \(1 - 1 = 0\)              \\
+				      0     & 1     & 1       & 1             & 0                                    & \(1 - 0 = 1\)              \\
+				      1     & 0     & 1       & 1             & 0                                    & \(1 - 0 = 1\)              \\
+				      1     & 1     & 2       & 0             & 0                                    & \(1 - 0 = 1\)              \\
+				      \hline
+			      \end{tabular}
+		      \]
+	      \end{figure}
+	\item \textbf{XOR Function}
+	      The XOR operation corresponds to the parity of \(x+y\):
+	      \[
+		      \operatorname{xor}(x,y) = \operatorname{mod}(x+y, 2).
+	      \]
+	      Intuitively, this gives 1 when exactly one of \(x,y\) is 1, and 0 otherwise.
+	      \begin{figure}[H]
+		      \centering
+		      \caption{Truth Table for XOR: \(\operatorname{xor}(x,y) = \operatorname{mod}(x+y, 2)\)}
+		      \[
+			      \begin{tabular}{|c|c|c|c|}
+				      \hline
+				      \(x\) & \(y\) & \(x+y\) & \(\operatorname{xor}(x,y)\)     \\
+				      \hline
+				      0     & 0     & 0       & \(\operatorname{mod}(0,2) = 0\) \\
+				      0     & 1     & 1       & \(\operatorname{mod}(1,2) = 1\) \\
+				      1     & 0     & 1       & \(\operatorname{mod}(1,2) = 1\) \\
+				      1     & 1     & 2       & \(\operatorname{mod}(2,2) = 0\) \\
+				      \hline
+			      \end{tabular}
+		      \]
+	      \end{figure}
+\end{enumerate}
+
+\subsection{Modular Congruence}
+
+\chapter{Primes, GCD, LCM}
+
+\section{Prime Numbers}
+
+\defn{Prime Number}{
+	An integer $p$ greater than 1 is called prime if the only positive factors of $p$ are 1 and $p$.
+	A positive integer that is greater than 1 and is not prime is called \textbf{composite}.
+}
+
+The reason why prime numbers are so fascinating to mathematicians is that they have so many interesting and unique property, even except for what we have seen in its definition. Below is what we call the fundamental theorem of arithmetic.
+
+\thm{Fundamental Theorem of Arithmetic}{
+For every integer $n > 1$, there exists a unique factorization into prime numbers, up to the order of the factors. Specifically, $n$ can be expressed as
+\[ n = p_1^{a_1} \cdot p_2^{a_2} \cdot \ldots \cdot p_k^{a_k} \]
+where $p_1 < p_2 < \ldots < p_k$ are prime numbers and $a_1, a_2, \ldots, a_k$ are positive integers. This factorization is unique, apart from the order of the prime factors.
+}
+\pf{
+We prove the theorem in two parts: existence and uniqueness.
+
+\textbf{Existence:} We prove by mathematical induction that every integer greater than 1 can be written as a product of primes.
+
+\textit{Base Case:} For $n = 2$, the statement holds true since 2 is itself a prime number.
+
+\textit{Inductive Step:} Assume the statement holds for all integers greater than 1 and less than $n$. Now consider the integer $n$.
+\begin{itemize}
+	\item If $n$ is prime, then it is trivially a product of primes (itself).
+	\item If $n$ is not prime, it can be written as $n = a \cdot b$ where $1 < a, b < n$. By the inductive hypothesis, both $a$ and $b$ can be factored into a product of primes. Therefore, $n$ can also be expressed as a product of primes by combining the prime factorization of $a$ and $b$.
+\end{itemize}
+This completes the proof of existence.
+
+\textbf{Uniqueness:} Assume, for the sake of contradiction, that there are two distinct prime factorization of $n$:
+\[ n = p_1^{a_1} \cdot p_2^{a_2} \cdot \ldots \cdot p_k^{a_k} = q_1^{b_1} \cdot q_2^{b_2} \cdot \ldots \cdot q_m^{b_m} \]
+where $p_i$ and $q_j$ are prime numbers, and $a_i, b_j$ are positive integers.
+To proceed to the rest of the proof, we need to use Euclid's lemma. (Just take it as a known result for now, we will revisit this in Bezout's identity.)
+
+\lemp{Euclid's Lemma}{
+	Let \(p\) be a prime number. If \(p\) divides the product \(ab\), where \(a\) and \(b\) are integers, then \(p\) divides \(a\) or \(p\) divides \(b\).}{ Assume \(p\) is a prime that divides \(ab\) but does not divide \(a\). We need to show that \(p\) must divide \(b\).
+
+	Since \(p\) does not divide \(a\), the greatest common divisor (gcd) of \(a\) and \(p\) is 1, i.e., \(\text{gcd}(a, p) = 1\). According to Bezout's identity, there exist integers \(x\) and \(y\) such that:
+
+	\[ax + py = 1\]
+
+	Multiplying both sides of the equation by \(b\), we get:
+
+	\[abx + pby = b\]
+
+	Since \(p\) divides \(ab\) (by assumption), \(p\) divides \(abx\). Also, \(p\) obviously divides \(pby\). Hence, \(p\) divides the sum \(abx + pby\), which means \(p\) divides \(b\).
+
+	This completes the proof, showing that if \(p\) divides \(ab\) and does not divide \(a\), then \(p\) must divide \(b\), in accordance with Euclid's lemma.}
+
+By Euclid's lemma, if a prime divides the product of two numbers, it must divide at least one of those numbers. Thus, $p_1$ must divide some $q_j$ on the right-hand side. Since $q_j$ is prime, we conclude that $p_1 = q_j$. Applying this argument symmetrically and repeatedly, we find that each set of prime factors must be identical to the other, contradicting the assumption of two distinct factorization.
+
+Therefore, the prime factorization of any integer greater than 1 is unique, up to the order of the factors, which completes the proof of the Fundamental Theorem of Arithmetic.
+}
+
+\ex{
+	100 can be taken as $100 = 2\cdot 2\cdot 5\cdot 5 = 2^2\cdot 5^2$.
+	Both 2 and 5 are primes.
+}
+
+\subsection{Prime Factorization Algorithm}
+We can use an iterative algorithm to find the prime factorization of a number. The algorithm works by dividing the number by the smallest prime factor repeatedly until the number becomes 1. The prime factors are collected in a list.
+The algorithm can be implemented as follows:
+\begin{algorithm}
+	\caption{Prime Factorization}
+	\begin{algorithmic}[H]
+		\Function{PrimeFactorization}{$n$}
+		\State $factors \gets \text{an empty list}$
+		\For{$p \gets 2$ \textbf{to} $\infty$} \Comment{Iterate over all primes}
+		\While{$n \mod p == 0$}
+		\State Add $p$ to $factors$
+		\State $n \gets n / p$
+		\EndWhile
+		\If{$p > n / p$}
+		\State \textbf{break}
+		\EndIf
+		\EndFor
+		\If{$n > 1$}
+		\State Add $n$ to $factors$
+		\EndIf
+		\State \Return $factors$
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+\ex{
+	To find the prime factorization of 8964:
+	\begin{itemize}
+		\item Start with \(n = 8964\).
+		\item Divide by \(2\): \(8964 \div 2 = 4482\) (add \(2\) to factors).
+		\item Divide by \(2\): \(4482 \div 2 = 2241\) (add \(2\) to factors).
+		\item Now, \(2241\) is not divisible by \(2\), so we try the next prime, which is \(3\).
+		\item Divide by \(3\): \(2241 \div 3 = 747\) (add \(3\) to factors).
+		\item Divide by \(3\): \(747 \div 3 = 249\) (add \(3\) to factors).
+		\item Divide by \(3\): \(249 \div 3 = 83\) (add \(3\) to factors).
+		\item Now, \(83\) is a prime number.
+		\item The final prime factorization is: \(8964 = 2^2 \cdot 3^3 \cdot 83^1\).
+	\end{itemize}
+}
+
+
+This algorithm seems trivial, yet it is actually very challenging to implement in practice. Because it takes huge efforts to find the first $n$ primes, and the algorithm is not efficient. Some more efficient algorithms for the purpose are:
+\begin{itemize}
+	\item \textbf{Pollard's rho algorithm}: This is a probabilistic algorithm for integer factorization that is particularly effective for large numbers.
+	\item \textbf{Elliptic Curve Factorization}: This is another advanced method for integer factorization that uses properties of elliptic curves.
+	\item \textbf{General Number Field Sieve (GNFS)}: This is the most efficient classical algorithm for factoring large integers.
+\end{itemize}
+
+\section{Prime Testing and Algorithms}
+The property of primes brings us to a question: how can we determine whether a number is prime or not? If we want to get many primes, how long will it take? What is the complexity of the algorithm? How can we find the next prime number after a given number?
+\defn{Prime Testing}{
+	There are several algorithms for testing the primality of a number. Some of the most common ones include:
+	\begin{itemize}
+		\item \textbf{Trial Division}: This is the simplest method, where we check if a number \( n \) is divisible by any prime number less than or equal to \( \sqrt{n} \). If it is, then \( n \) is composite; otherwise, it is prime.
+		\item \textbf{Sieve of Eratosthenes}: This algorithm generates all prime numbers up to a given limit \( n \) by iteratively marking the multiples of each prime starting from 2.
+		\item \textbf{Fermat's Little Theorem}: This theorem provides a probabilistic test for primality. It states that if \( p \) is a prime and \( a \) is an integer not divisible by \( p \), then \( a^{p-1} \equiv 1 \mod p \).
+	\end{itemize}
+}
+
+We will introduce the first two algorithms in detail, and the Fermat's Little Theorem will be introduced later for other purposes.
+
+\subsection{Trial Division}
+Trial division is a straightforward and naive algorithm for testing the primality of a number. The idea is simple, we can search for primes linearly from 2 to to any range of numbers we want to check. However, to make sure whether a number is prime or not, we can actually limit the search space to the square root of the number.
+\prop{
+	This is because if \( n \) is divisible by any number greater than \( \sqrt{n} \), it must also be divisible by a number less than \( \sqrt{n} \).
+}
+
+\pf{
+	If \( n \) is composite, by the definition of a composite integer, we know that it has a factor \( a \) with \( 1 < a < n \). Hence, by the definition of a factor of a positive integer, we have \( n = ab \), where \( b \) is a positive integer greater than 1. We will show that \( a \leq \sqrt{n} \) or \( b \leq \sqrt{n} \). If \( a > \sqrt{n} \) and \( b > \sqrt{n} \), then \( ab > \sqrt{n} \cdot \sqrt{n} = n \), which is a contradiction. Consequently, \( a \leq \sqrt{n} \) or \( b \leq \sqrt{n} \). Because both \( a \) and \( b \) are divisors of \( n \), we see that \( n \) has a positive divisor not exceeding \( \sqrt{n} \). This divisor is either prime or, by the fundamental theorem of arithmetic, has a prime divisor less than itself. In either case, \( n \) has a prime divisor less than or equal to \( \sqrt{n} \).
+}
+
+
+The algorithm works as follows:
+
+\begin{algorithm}[H]
+	\caption{TrialDivision($n$)}
+	\begin{algorithmic}[1]
+		\Require Integer \(n > 1\)
+		\Ensure \textbf{True} if \(n\) is prime, otherwise \textbf{False}
+		\For{\(d \gets 2\) to \(\lfloor \sqrt{n} \rfloor\)}
+		\If{\(d \mid n\)}
+		\State \Return \textbf{False} \Comment{\(n\) is divisible by \(d\), so not prime}
+		\EndIf
+		\EndFor
+		\State \Return \textbf{True} \Comment{\(n\) has no divisors other than 1 and itself}
+	\end{algorithmic}
+\end{algorithm}
+\ex{
+	For example, to check if \(29\) is prime, we only need to check divisibility by \(2, 3, 4, 5\) (up to \(\lfloor \sqrt{29} \rfloor = 5\)). Since \(29\) is not divisible by any of these numbers, it is prime.
+}
+
+\subsubsection{Complexity of Trial Division}
+The time complexity of the trial division algorithm is \(O(\sqrt{n})\) because we only need to check divisibility up to \(\sqrt{n}\). This makes it inefficient for large numbers, especially when \(n\) is very large.
+
+Space complexity is \(O(1)\) since we only need a constant amount of space to store the variables used in the algorithm.
+
+\subsubsection{Correctness of Trial Division}
+The proof is straightforward. You may also try to prove it using induction or loop invariant yourself.
+
+
+\subsection{Sieve of Eratosthenes}
+The Sieve of Eratosthenes is an efficient algorithm for finding all prime numbers up to a specified integer \( n \). The algorithm works by iteratively marking the multiples of each prime number starting from 2. The remaining unmarked numbers are primes.
+\begin{algorithm}[H]
+	\caption{SieveOfEratosthenes($n$)}
+	\begin{algorithmic}[1]
+		\Require Integer \(n > 1\)
+		\Ensure List of prime numbers up to \(n\)
+		\State Create a list of integers from 2 to \(n\)
+		\For{\(p \gets 2\) to \(\sqrt{n}\)}
+		\If{\(p\) is not marked}
+		\For{\(k \gets p^2\) to \(n\) with step \(p\)}
+		\State Mark \(k\) as composite
+		\EndFor
+		\EndIf
+		\EndFor
+		\State Return the unmarked numbers as primes
+	\end{algorithmic}
+\end{algorithm}
+
+\ex{
+	To find all prime numbers up to \(30\):
+	\begin{itemize}
+		\item Start with a list of numbers from \(2\) to \(30\).
+		\item Mark \(2\) and its multiples: \(4, 6, 8, \ldots, 30\).
+		\item Mark \(3\) and its multiples: \(9, 12, 15, \ldots, 30\).
+		\item Continue this process until reaching \(\sqrt{30} \approx 5.48\).
+		\item The remaining unmarked numbers are the primes: \(2, 3, 5, 7, 11, 13, 17, 19, 23, 29\).
+	\end{itemize}
+}
+
+\subsubsection{Complexity of Sieve of Eratosthenes}
+The time complexity of the Sieve of Eratosthenes is \(O(n \log(\log(n)))\), which is significantly faster than trial division for large \(n\). The space complexity is \(O(n)\) because we need to store the list of integers from 2 to \(n\).
+
+We can show the complexity formally:
+\lemp{Sieve of Eratosthenes Complexity}{
+	The Sieve of Eratosthenes has a time complexity of \(O(n \log(\log(n)))\) and a space complexity of \(O(n)\).
+}{
+	To analyze the time complexity, consider the algorithm proceeds by iteratively marking the multiples of each prime \(p\) starting from 2 up to \(\sqrt{n}\). For each prime \(p\), the number of multiples marked is approximately \(\frac{n}{p} - 1\).
+
+	Therefore, the total number of marking operations is bounded by
+	\[
+		T(n) \leq \sum_{\substack{p \leq \sqrt{n} \\ p \text{ prime}}} \left(\frac{n}{p} - 1\right) \leq n \sum_{p \leq \sqrt{n}} \frac{1}{p}.
+	\]
+
+	It is a classical result in analytic number theory (see \href{https://en.wikipedia.org/wiki/Mertens'_theorems}{Mertens' theorems}) that the sum of reciprocals of primes up to \(x\) satisfies
+	\[
+		\sum_{p \leq x} \frac{1}{p} = \log \log x + O(1).
+	\]
+
+	By substituting \(x = \sqrt{n}\), we get
+	\[
+		\sum_{p \leq \sqrt{n}} \frac{1}{p} = \log \log \sqrt{n} + O(1) = \log \frac{1}{2} \log n + O(1) = \log \log n + O(1).
+	\]
+
+	Hence, the time complexity satisfies
+	\[
+		T(n) = O\bigl(n \log \log n\bigr).
+	\]
+
+	Regarding space complexity, the algorithm requires \(O(n)\) space to store a boolean array (or similar data structure) representing the primality status of each integer from 2 up to \(n\).
+
+	This completes the proof of the time and space complexity of the Sieve of Eratosthenes.
+}
+
+
+
+Apart from \href{https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes}{Sieve of Eratosthenes}, \href{https://en.wikipedia.org/wiki/Sieve_of_Atkin}{Sieve of Ktkin} is also a well-known algorithm for finding all prime numbers up to a specified integer \( n \). It is more efficient than the Sieve of Eratosthenes for large values of \( n \).
+
+\section{Greatest Common Divisor and Least Common Multiple}
+\subsection{Greatest Common Divisor}
+\defn{Greatest Common Divisor}{
+	The greatest common divisor (gcd) of two integers \(a\) and \(b\), denoted \(\gcd(a, b)\), is the largest positive integer that divides both \(a\) and \(b\) without leaving a remainder.
+}
+\subsubsection{Euclidean Algorithm}
+
+\chapter{Modular Equations and Diophantine Equations}
+\section{Solving Linear Congruence}
+\subsection{Modular Inverse}
+\section{Diophantine Equations}
+\subsection{Linear Diophantine Equations}
+\section{System of Linear Congruence}
+\subsection{Chinese Remainder Theorem}
+\section{Fermat's Little Theorem}
+
+\chapter{Applications of Number Theory}
+\section{Cryptography}
+\subsection{Basics of Cryptosystems}
+\subsection{Diffie-Hellman Key Exchange}
+\subsubsection{RSA Algorithm}
+\section{Hash Functions}
+\subsection{Honorary Hash Functions}
+\subsection{SHA-256}
+\section{Representation of Integers}
+\subsection{Modular Exponentiation Algorithm}
+\subsection{Base Representation and Conversion}
+
+\nocite{*}
+\printbibliography
+
+\end{document}

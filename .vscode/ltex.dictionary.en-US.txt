@@ -1,1 +1,5 @@
 Karatsuba
+GCD
+TrialDivision
+Diffie-Hellman
+Cryptosystems
