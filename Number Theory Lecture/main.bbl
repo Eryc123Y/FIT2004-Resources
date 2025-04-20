@@ -18,111 +18,14 @@
 
 
 \refsection{0}
-  \datalist[entry]{nyt/global//global/global}
-    \entry{lehmanMathematicsComputerScience2017}{book}{}
-      \name{author}{3}{}{%
-        {{un=0,uniquepart=base,hash=e9354f7da9d5e5cbaf657bca9e1daf67}{%
-           family={Lehman},
-           familyi={L\bibinitperiod},
-           given={Eric},
-           giveni={E\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=c7c1099a6fd425d7be8658e0a3bd02b0}{%
-           family={Leighton},
-           familyi={L\bibinitperiod},
-           given={F.\bibnamedelimi Thomson},
-           giveni={F\bibinitperiod\bibinitdelim T\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=71738b87e501b0d511fa3570b122f0d6}{%
-           family={R.\bibnamedelimi Meyer},
-           familyi={R\bibinitperiod\bibinitdelim M\bibinitperiod},
-           given={Alberty},
-           giveni={A\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{19398d0ba1a0ada4571fdf13f42136e8}
-      \strng{fullhash}{19398d0ba1a0ada4571fdf13f42136e8}
-      \strng{bibnamehash}{19398d0ba1a0ada4571fdf13f42136e8}
-      \strng{authorbibnamehash}{19398d0ba1a0ada4571fdf13f42136e8}
-      \strng{authornamehash}{19398d0ba1a0ada4571fdf13f42136e8}
-      \strng{authorfullhash}{19398d0ba1a0ada4571fdf13f42136e8}
-      \field{sortinit}{L}
-      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{This text serves as an introduction to discrete mathematics, probability, and mathematical thinking for computer scientists with an interactive introduction to discrete mathematics oriented toward …}
-      \field{day}{8}
-      \field{isbn}{978-988-8407-06-4}
-      \field{langid}{english}
-      \field{month}{3}
-      \field{title}{Mathematics for {{Computer Science}} ({{Lehman}}, {{Leighton}}, and {{Meyer}})}
-      \field{urlday}{16}
-      \field{urlmonth}{4}
-      \field{urlyear}{2025}
-      \field{year}{2017}
-      \field{dateera}{ce}
-      \field{urldateera}{ce}
-      \true{nocite}
-      \verb{file}
-      \verb /home/eric/Zotero/storage/MKHNYTSC/Mathematics_for_Computer_Science_(Lehman_Leighton_and_Meyer).html
-      \endverb
-      \verb{urlraw}
-      \verb https://eng.libretexts.org/Bookshelves/Computer_Science/Programming_and_Computation_Fundamentals/Mathematics_for_Computer_Science_(Lehman_Leighton_and_Meyer)
-      \endverb
-      \verb{url}
-      \verb https://eng.libretexts.org/Bookshelves/Computer_Science/Programming_and_Computation_Fundamentals/Mathematics_for_Computer_Science_(Lehman_Leighton_and_Meyer)
-      \endverb
-    \endentry
-    \entry{rosenElementaryNumberTheory2010}{book}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=da6abea47727069cf3c4166b06bde892}{%
-           family={Rosen},
-           familyi={R\bibinitperiod},
-           given={Kenneth},
-           giveni={K\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{location}{1}{%
-        {Boston}%
-      }
-      \list{publisher}{1}{%
-        {Pearson}%
-      }
-      \strng{namehash}{da6abea47727069cf3c4166b06bde892}
-      \strng{fullhash}{da6abea47727069cf3c4166b06bde892}
-      \strng{bibnamehash}{da6abea47727069cf3c4166b06bde892}
-      \strng{authorbibnamehash}{da6abea47727069cf3c4166b06bde892}
-      \strng{authornamehash}{da6abea47727069cf3c4166b06bde892}
-      \strng{authorfullhash}{da6abea47727069cf3c4166b06bde892}
-      \field{extraname}{1}
-      \field{sortinit}{R}
-      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{abstract}{Elementary Number Theory, Sixth Edition, blends classical theory with modern applications and is notable for its outstanding exercise sets. A full range of exercises, from basic to challenging, helps readers explore key concepts and push their understanding to new heights. Computational exercises and computer projects are also available. Reflecting many years of professors' feedback, this edition offers new examples, exercises, and applications, while incorporating advancements and discoveries in number theory made in the past few years.}
-      \field{day}{30}
-      \field{edition}{6th edition}
-      \field{isbn}{978-0-321-50031-1}
-      \field{langid}{english}
-      \field{month}{3}
-      \field{pagetotal}{752}
-      \field{title}{Elementary {{Number Theory}} and {{Its Application}}, 6th {{Edition}}}
-      \field{year}{2010}
-      \field{dateera}{ce}
-      \true{nocite}
-    \endentry
+  \datalist[entry]{none/global//global/global}
     \entry{rosenDiscreteMathematicsIts2018}{book}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=da6abea47727069cf3c4166b06bde892}{%
+        {{hash=da6abea47727069cf3c4166b06bde892}{%
            family={Rosen},
            familyi={R\bibinitperiod},
            given={Kenneth},
-           giveni={K\bibinitperiod},
-           givenun=0}}%
+           giveni={K\bibinitperiod}}}%
       }
       \list{location}{1}{%
         {New York (N.Y.)}%
@@ -136,11 +39,9 @@
       \strng{authorbibnamehash}{da6abea47727069cf3c4166b06bde892}
       \strng{authornamehash}{da6abea47727069cf3c4166b06bde892}
       \strng{authorfullhash}{da6abea47727069cf3c4166b06bde892}
-      \field{extraname}{2}
-      \field{sortinit}{R}
-      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{ISBN: 9781260091991 is an International Student Edition of Discrete Mathematics and Its Applications 8th Edition By Kenneth Rosen This ISBN: 9781260091991 is student textbook only. It will not come with online access code. Online Access code sold separately at ISBN: 9781259731242 The content of this is the same on other formats. Rosen's Discrete Mathematics and its Applications presents a precise, relevant, comprehensive approach to mathematical concepts. This world-renowned best-selling text was written to accommodate the needs across a variety of majors and departments, including mathematics, computer science, and engineering. As the market leader, the book is highly flexible, comprehensive and a proven pedagogical teaching tool for instructors. Digital is becoming increasingly important and gaining popularity, crowning Connect as the digital leader for this discipline. McGraw-Hill Education's Connect, available as an optional add on item, is the only integrated learning system that empowers students by continuously adapting to deliver precisely what they need, when they need it and how they need it - ensuring class time is more effective. Connect allows the professor to assign homework, quizzes, and tests easily and automatically grades and records the scores of the student's work. Problems are randomized to prevent sharing of answers and may also have a "multi-step solution" which helps move the students' learning along if they experience difficulty.}
@@ -153,6 +54,89 @@
       \field{title}{Discrete {{Mathematics}} and {{Its Applications}}}
       \field{year}{2018}
       \field{dateera}{ce}
+    \endentry
+    \entry{rosenElementaryNumberTheory2010}{book}{}
+      \name{author}{1}{}{%
+        {{hash=da6abea47727069cf3c4166b06bde892}{%
+           family={Rosen},
+           familyi={R\bibinitperiod},
+           given={Kenneth},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Boston}%
+      }
+      \list{publisher}{1}{%
+        {Pearson}%
+      }
+      \strng{namehash}{da6abea47727069cf3c4166b06bde892}
+      \strng{fullhash}{da6abea47727069cf3c4166b06bde892}
+      \strng{bibnamehash}{da6abea47727069cf3c4166b06bde892}
+      \strng{authorbibnamehash}{da6abea47727069cf3c4166b06bde892}
+      \strng{authornamehash}{da6abea47727069cf3c4166b06bde892}
+      \strng{authorfullhash}{da6abea47727069cf3c4166b06bde892}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Elementary Number Theory, Sixth Edition, blends classical theory with modern applications and is notable for its outstanding exercise sets. A full range of exercises, from basic to challenging, helps readers explore key concepts and push their understanding to new heights. Computational exercises and computer projects are also available. Reflecting many years of professors' feedback, this edition offers new examples, exercises, and applications, while incorporating advancements and discoveries in number theory made in the past few years.}
+      \field{day}{30}
+      \field{edition}{6th edition}
+      \field{isbn}{978-0-321-50031-1}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{pagetotal}{752}
+      \field{title}{Elementary {{Number Theory}} and {{Its Application}}, 6th {{Edition}}}
+      \field{year}{2010}
+      \field{dateera}{ce}
+    \endentry
+    \entry{lehmanMathematicsComputerScience2017}{book}{}
+      \name{author}{3}{}{%
+        {{hash=e9354f7da9d5e5cbaf657bca9e1daf67}{%
+           family={Lehman},
+           familyi={L\bibinitperiod},
+           given={Eric},
+           giveni={E\bibinitperiod}}}%
+        {{hash=c7c1099a6fd425d7be8658e0a3bd02b0}{%
+           family={Leighton},
+           familyi={L\bibinitperiod},
+           given={F.\bibnamedelimi Thomson},
+           giveni={F\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=71738b87e501b0d511fa3570b122f0d6}{%
+           family={R.\bibnamedelimi Meyer},
+           familyi={R\bibinitperiod\bibinitdelim M\bibinitperiod},
+           given={Alberty},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{19398d0ba1a0ada4571fdf13f42136e8}
+      \strng{fullhash}{19398d0ba1a0ada4571fdf13f42136e8}
+      \strng{bibnamehash}{19398d0ba1a0ada4571fdf13f42136e8}
+      \strng{authorbibnamehash}{19398d0ba1a0ada4571fdf13f42136e8}
+      \strng{authornamehash}{19398d0ba1a0ada4571fdf13f42136e8}
+      \strng{authorfullhash}{19398d0ba1a0ada4571fdf13f42136e8}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This text serves as an introduction to discrete mathematics, probability, and mathematical thinking for computer scientists with an interactive introduction to discrete mathematics oriented toward …}
+      \field{day}{8}
+      \field{isbn}{978-988-8407-06-4}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{title}{Mathematics for {{Computer Science}} ({{Lehman}}, {{Leighton}}, and {{Meyer}})}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \true{nocite}
+      \verb{file}
+      \verb /home/eric/Zotero/storage/MKHNYTSC/Mathematics_for_Computer_Science_(Lehman_Leighton_and_Meyer).html
+      \endverb
+      \verb{urlraw}
+      \verb https://eng.libretexts.org/Bookshelves/Computer_Science/Programming_and_Computation_Fundamentals/Mathematics_for_Computer_Science_(Lehman_Leighton_and_Meyer)
+      \endverb
+      \verb{url}
+      \verb https://eng.libretexts.org/Bookshelves/Computer_Science/Programming_and_Computation_Fundamentals/Mathematics_for_Computer_Science_(Lehman_Leighton_and_Meyer)
+      \endverb
     \endentry
   \enddatalist
 \endrefsection

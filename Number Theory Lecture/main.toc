@@ -1,37 +1,39 @@
 \babel@toc {english}{}\relax 
-\contentsline {chapter}{\numberline {1}Divisibility and Modular Arithmetic}{2}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Division}{2}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Modular Arithmetic}{5}{section.1.2}%
-\contentsline {subsection}{\numberline {1.2.1}Div and Mod Operator}{5}{subsection.1.2.1}%
-\contentsline {subsection}{\numberline {1.2.2}Modular Congruence}{10}{subsection.1.2.2}%
-\contentsline {chapter}{\numberline {2}Primes, GCD, LCM}{11}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Prime Numbers}{11}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Prime Factorization Algorithm}{12}{subsection.2.1.1}%
-\contentsline {section}{\numberline {2.2}Prime Testing and Algorithms}{14}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Trial Division}{14}{subsection.2.2.1}%
-\contentsline {subsubsection}{Complexity of Trial Division}{15}{section*.3}%
-\contentsline {subsubsection}{Correctness of Trial Division}{15}{section*.4}%
-\contentsline {subsection}{\numberline {2.2.2}Sieve of Eratosthenes}{15}{subsection.2.2.2}%
-\contentsline {subsubsection}{Complexity of Sieve of Eratosthenes}{16}{section*.5}%
-\contentsline {section}{\numberline {2.3}Greatest Common Divisor and Least Common Multiple}{17}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Greatest Common Divisor}{17}{subsection.2.3.1}%
-\contentsline {subsubsection}{Euclidean Algorithm}{17}{section*.6}%
-\contentsline {chapter}{\numberline {3}Modular Equations and Diophantine Equations}{18}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Solving Linear Congruence}{18}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Modular Inverse}{18}{subsection.3.1.1}%
-\contentsline {section}{\numberline {3.2}Diophantine Equations}{18}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Linear Diophantine Equations}{18}{subsection.3.2.1}%
-\contentsline {section}{\numberline {3.3}System of Linear Congruence}{18}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Chinese Remainder Theorem}{18}{subsection.3.3.1}%
-\contentsline {section}{\numberline {3.4}Fermat's Little Theorem}{18}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Applications of Number Theory}{19}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Cryptography}{19}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Basics of Cryptosystems}{19}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Diffie-Hellman Key Exchange}{19}{subsection.4.1.2}%
-\contentsline {subsubsection}{RSA Algorithm}{19}{section*.7}%
-\contentsline {section}{\numberline {4.2}Hash Functions}{19}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Honorary Hash Functions}{19}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}SHA-256}{19}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Representation of Integers}{19}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Modular Exponentiation Algorithm}{19}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Base Representation and Conversion}{19}{subsection.4.3.2}%
+\contentsline {chapter}{\numberline {1}Divisibility and Modular Arithmetic}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Division}{3}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Modular Arithmetic}{6}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Div and Mod Operator}{6}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Modular Congruence}{11}{subsection.1.2.2}%
+\contentsline {chapter}{\numberline {2}Primes, GCD, LCM}{12}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Prime Numbers}{12}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Prime Factorization Algorithm}{13}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}Prime Testing and Algorithms}{15}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Trial Division}{15}{subsection.2.2.1}%
+\contentsline {subsubsection}{Complexity of Trial Division}{16}{section*.3}%
+\contentsline {subsubsection}{Correctness of Trial Division}{16}{section*.4}%
+\contentsline {subsection}{\numberline {2.2.2}Sieve of Eratosthenes}{16}{subsection.2.2.2}%
+\contentsline {subsubsection}{Complexity of Sieve of Eratosthenes}{17}{section*.5}%
+\contentsline {section}{\numberline {2.3}Greatest Common Divisor and Least Common Multiple}{18}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Greatest Common Divisor}{18}{subsection.2.3.1}%
+\contentsline {subsubsection}{Euclidean Algorithm}{18}{section*.6}%
+\contentsline {chapter}{\numberline {3}Modular Equations and Diophantine Equations}{19}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Solving Linear Congruence}{19}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Modular Inverse}{19}{subsection.3.1.1}%
+\contentsline {section}{\numberline {3.2}Diophantine Equations}{19}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Linear Diophantine Equations}{19}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}System of Linear Congruence}{19}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Chinese Remainder Theorem}{19}{subsection.3.3.1}%
+\contentsline {section}{\numberline {3.4}Fermat's Little Theorem}{19}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Applications of Number Theory}{20}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Cryptography}{20}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Basics of Cryptosystems}{20}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Diffie-Hellman Key Exchange}{20}{subsection.4.1.2}%
+\contentsline {subsubsection}{RSA Algorithm}{20}{section*.7}%
+\contentsline {section}{\numberline {4.2}Hash Functions}{20}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Modular Hash Functions}{20}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Multiplicative Hash Functions}{20}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Polynomial Hash Functions}{20}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}SHA-256}{20}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Representation of Integers}{20}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Modular Exponentiation Algorithm}{20}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Base Representation and Conversion}{20}{subsection.4.3.2}%

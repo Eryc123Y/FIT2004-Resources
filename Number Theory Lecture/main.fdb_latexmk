@@ -1,13 +1,13 @@
 # Fdb version 4
-["biber main"] 1744799718.45581 "main.bcf" "main.bbl" "main" 1744799721.53327 0
-  "main.bcf" 1744799721.4755 107908 1b32d588d8b02e12d4527fa11ec70401 "pdflatex"
-  "references.bib" 1744799718.31243 3508 29fd6ace5de721228e6b2f5881ad6b8c ""
+["biber main"] 1744800409.04769 "main.bcf" "main.bbl" "main" 1744800959.97749 0
+  "main.bcf" 1744800959.91562 107561 b652f54f38b4284dd8aef65556c03868 "pdflatex"
+  "references.bib" 1744800408.91221 3482 e8b3dd78cb0a784705d29cc0d31cae01 ""
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1744799720.66142 "/home/eric/Documents/GitHub/FIT2004-Resources/Number Theory Lecture/main.tex" "main.pdf" "main" 1744799721.53346 0
-  "/home/eric/Documents/GitHub/FIT2004-Resources/Number Theory Lecture/main.tex" 1744798975.63222 32817 c98ee20cb7ad267b14f104576adb9f5e ""
+["pdflatex"] 1744800959.05707 "/home/eric/Documents/GitHub/FIT2004-Resources/Number Theory Lecture/main.tex" "main.pdf" "main" 1744800959.97769 0
+  "/home/eric/Documents/GitHub/FIT2004-Resources/Number Theory Lecture/main.tex" 1744800958.4016 32925 70bee668b1a450ad2e4282bea4022469 ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/fonts/map/fontname/texfonts.map" 1 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -150,7 +150,10 @@
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/base/book.cls" 1 23268 80674e17dbdc75804bd4d067e837600a ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/base/ifthen.sty" 1 5319 2b738d02ce36ada6dcdd9534940db0ee ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/base/inputenc.sty" 1 5048 425739d70251273bf93e3d51f3c40048 ""
-  "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/bbx/authoryear.bbx" 1 8024 f170876981d3e1db9ed0abd5abc62dbe ""
+  "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex-ieee/ieee.bbx" 1 20021 af496425072862e81e424c104c403595 ""
+  "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex-ieee/ieee.cbx" 1 4682 63056ede870333cd64f17ee967145cf9 ""
+  "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/bbx/numeric-comp.bbx" 1 92 7cdbb04a1e32fba0fbb91b6e6d123497 ""
+  "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/bbx/numeric.bbx" 1 1818 9ed166ac0a9204a8ebe450ca09db5dde ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/bbx/standard.bbx" 1 25680 409c3f3d570418bc545e8065bebd0688 ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/biblatex.cfg" 1 69 249fa6df04d948e51b6d5c67bea30c42 ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/biblatex.def" 1 92527 8f6b3a677f74ea525477a813f33c4e65 ""
@@ -158,7 +161,7 @@
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/blx-case-expl3.sty" 1 8433 72f8188742e7214b7068f345cd0287ac ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/blx-compat.def" 1 13919 5426dbe90e723f089052b4e908b56ef9 ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/blx-dm.def" 1 32455 8d3e554836db11aab80a8e11be62e1b1 ""
-  "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/cbx/authoryear.cbx" 1 3976 2d46354b304f9bc8fda915fe9215de04 ""
+  "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/cbx/numeric-comp.cbx" 1 10425 7de071597dabda19c14ff0780122d6d4 ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/biblatex/lbx/english.lbx" 1 39965 48ce9ce3350aba9457f1020b1deba5cf ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/csquotes/csquotes.cfg" 1 7068 06f8d141725d114847527a66439066b6 ""
   "/nix/store/8pllqrcln2qx94ycb9iwgps3kqhk465f-texlive-2023-env-texmfdist/tex/latex/csquotes/csquotes.def" 1 21994 2bc2a882df92d97dbce35c06bb1d3541 ""
@@ -232,12 +235,12 @@
   "/nix/store/jg380am8znqh8c5scvm3cy98455ijcl2-texlive-2023-env/share/texmf-var/web2c/pdftex/pdflatex.fmt" 1 8221880 16eb9641de3b595d87f33ac3b9e9d010 ""
   "/nix/store/jg380am8znqh8c5scvm3cy98455ijcl2-texlive-2023-env/share/texmf-var/web2c/texmf.cnf" 1 42643 4ff11f4dddf8f01774a01c18e01ecfa6 ""
   "commands.tex" 1744781656.03366 147 45cd00219745fa82356e6c70a2123dfd ""
-  "main.aux" 1744799721.4735 6826 9db76eb23977675bad84a692bf1914c5 "pdflatex"
-  "main.bbl" 1744799718.88045 8054 20bafc13fe2ad7de66910283011c899b "biber main"
-  "main.out" 1744799721.4745 5570 dbc9de4a4d27f91f3f456ea657ee6c75 "pdflatex"
-  "main.run.xml" 1744799721.4755 2311 e66a0e3ff336a5af941c7fe634558519 "pdflatex"
-  "main.tex" 1744798975.63222 32817 c98ee20cb7ad267b14f104576adb9f5e ""
-  "main.toc" 1744799721.4755 3146 a2889b4c3f9115fea198a7d6ca55436a "pdflatex"
+  "main.aux" 1744800959.91262 7336 7efaab5182d865686f4c4229c492d69c "pdflatex"
+  "main.bbl" 1744800409.48722 7496 fd3f67c3026d1606d6dd204dd8b822d2 "biber main"
+  "main.out" 1744800959.91462 5971 1c99e1d6ab4d1b91d4606e49da95e300 "pdflatex"
+  "main.run.xml" 1744800959.91562 2402 7c866ed2192e71c57464ed4279aadefa "pdflatex"
+  "main.tex" 1744800958.4016 32925 70bee668b1a450ad2e4282bea4022469 ""
+  "main.toc" 1744800959.91562 3341 e27ac3e33dcfcb20ea548c4652457fe5 "pdflatex"
   "theorems.tex" 1744787063.31386 8185 2df95026aa0c8b92b7918f1a0ad5e8ad ""
   (generated)
   "main.aux"
