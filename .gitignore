@@ -158,3 +158,58 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# LaTeX intermediate and output files
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fls
+*.fdb_latexmk
+*.glo
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.acn
+*.acr
+*.alg
+*.glg
+*.gls
+*.ist
+*.maf
+*.mtc*
+*.run.xml
+*.slg
+*.slo
+*.sls
+*.xdy
+*.xdv
+
+# LaTeX editor backups
+*~
+*.bak
+*.backup
+*.tmp
+
+# LaTeX build directories
+_build/
+build/
+latex.out/
+latex.log/
+
+# PDF and DVI output
+*.pdf
+*.dvi
+*.ps
+
+# latexmk and arara config
+.latexmkrc
+.arara.log
